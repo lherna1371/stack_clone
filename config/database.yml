@@ -4,12 +4,16 @@ development:
   database: stack_clone_development
   pool: 5
   timeout: 5000
+  host: localhost
+  port: 5432
 
 test:
   adapter: postgresql
   database: stack_clone_test
   pool: 5
   timeout: 5000
+  host: localhost
+  port: 5432
 
 production:
   adapter: postgresql
