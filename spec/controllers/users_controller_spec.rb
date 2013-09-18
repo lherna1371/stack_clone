@@ -13,7 +13,10 @@ describe UsersController do
 
 	describe "Post create" do
 		it "should be able to create a new user" do
-				pending
+			a = User.create(handle: "handle",email: "test@test.com",password_digest: "password")
+			a.save
+			
+			response.should be_success
 		end
 	end
 end
