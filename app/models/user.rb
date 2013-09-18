@@ -6,6 +6,10 @@ class User < ActiveRecord::Base
 	validates :email, presence: true,uniqueness: true
 	validates :password_digest, presence: true
 
+  has_many :quesions
+  has_many :answers
+  has_many :comments
+
 	def self.authenticate(name, secret)
     user = find_by_name(name)
     if user && user.password == secret
