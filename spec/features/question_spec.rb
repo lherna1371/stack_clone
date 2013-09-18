@@ -28,5 +28,8 @@ feature 'Submit Question' do
 		end
 	end
 
-	context "for unsigned-in user" 
+	context "for unsigned-in user" do
+		pending
+		it "should redirect to sign in path"
+	end
 end
