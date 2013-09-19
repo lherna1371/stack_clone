@@ -1,7 +1,28 @@
+
+<h2>Question:</h2>
 <%= link_to "up", upvote_path(@question.id)%> <%= link_to "down", downvote_path(@question.id)%>Votes: <%= @question.votecount %><h2>Question:</h2>
 <h3>Title: <%= @question.title %></h3><br>
 
+
+
 Content: <%= @question.content %>
+
+<h2>Answers:</h2>
+
+<% @answers.each do |answer| %>
+<tr>
+  <td><%= answer.content %></td><br>
+  <td>Posted: <%= answer.created_at %></td><br><br>
+</tr>
+<% end %>
+
+
+<% if current_user && current_user == @question.user %>
+	<%= form_for @question, :method => :delete do |f| %>
+		<%= f.button 'Delete' %>
+	<% end %>
+<% end %>
+
 
 <h2>Answer Question:</h2>
 
