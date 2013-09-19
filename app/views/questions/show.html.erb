@@ -1,4 +1,4 @@
-<%= link_to "Up", '/upvote/@question.id' %> <%= link_to "Down", '/downvote/@question.id' %>Votes: <%= @question.votecount %><h2>Question:</h2>
+<%= link_to "up", upvote_path(@question.id)%> <%= link_to "down", downvote_path(@question.id)%>Votes: <%= @question.votecount %><h2>Question:</h2>
 <h3>Title: <%= @question.title %></h3><br>
 
 Content: <%= @question.content %>
