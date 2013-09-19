@@ -1,6 +1,15 @@
 <h2>Question:</h2>
-Title: <%= @question.title %><br>
+Title: <h3><%= @question.title %></h3><br>
 Content: <%= @question.content %>
+
+<h2>Answers:</h2>
+
+<% @answers.each do |answer| %>
+<tr>
+  <td><%= answer.content %></td><br>
+  <td>Posted: <%= answer.created_at %></td><br><br>
+</tr>
+<% end %>
 
 <h2>Answer Question:</h2>
 
