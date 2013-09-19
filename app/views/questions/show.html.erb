@@ -1,2 +1,12 @@
-<%= @question.title %>
+<h2>Question:</h2>
+Title: <%= @question.title %><br>
+Content: <%= @question.content %>
 
+<h2>Answer Question:</h2>
+
+<%= form_for :answer, url: answers_path do |f| %>	
+	<%= f.label :content %><br>
+	<%= f.text_area :content, :size => "30x5" %>
+	<%= f.hidden_field :question_id, :value => @question.id %><br>
+	<%= f.submit%>
+<% end %>
