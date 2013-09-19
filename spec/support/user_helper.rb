@@ -5,7 +5,8 @@ module UserHelper
   end
 
   def sign_in
-  	u = User.create!(:handle => "Test3", :email => "a@c.com", :password => "abc123", :password_confirmation => "abc123")
-  	
+  	a = User.create(handle: "handle",email: "test@test.com",password_digest: "password")
+  	a.save
+  	session[:user_id] = a.id
   end
 end

@@ -35,6 +35,7 @@ end
 group :test, :development do
 	gem 'rspec-rails', '~> 2.4'
 	gem 'capybara'
+	gem 'launchy'
 end
 # Use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
