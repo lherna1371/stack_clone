@@ -13,7 +13,8 @@ feature 'Create User' do
 		expect {
 			fill_in 'user_handle', with: 'username'
 			fill_in 'user_email', with: "email@email.com"
-			fill_in 'user_password_digest', with: "password"
+			fill_in 'user_password', with: "password"
+			fill_in 'user_password_confirmation', with: "password"
 			click_button 'Create User'
 		}.to change(User, :count).by(1)
 	end
