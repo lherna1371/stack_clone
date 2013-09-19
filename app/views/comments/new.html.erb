@@ -1,11 +1,10 @@
-<h2>Answer:</h2>
-<p>Content:</p> 
-<%= @answer.content %>
+<h2><%= @resource.class %>:</h2>
+<p>Content:</p>  
+<%= @resource.content %>
 
-<%= form_for([@answer, @answer.comments.build]) do |f| %>
+<%= form_for([@resource, @resource.comments.build]) do |f| %>
   
-
-  <h2>Comment on this answer:</h2>
+  <h2>Comment on this <%= type_to_s @resource %>:</h2>
   <p>
     <%= f.label :content %><br />
     <%= f.text_area :content %>
