@@ -11,11 +11,13 @@ end
 
 describe "Answer is saved to database and database is +1" do
 	it "should save question to databse and increase count by one" do
+	sign_in
 	question = Question.create(title: "sample title", content: "Hey, this should be content", user_id: 1)
 	visit question_path(question)		
-		expect {
-			fill_in 'answer_content', with: 'Sample Answer'
-			click_button 'Save Answer'
-		}.to change(Answer, :count).by(1)
+	fill_in 'answer_content', with: 'Sample Answer'
+	click_button 'Save Answer'
+	current_path.should == question_path(question.id)
 	end
 end
+
+
