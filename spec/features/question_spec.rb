@@ -43,3 +43,20 @@ feature 'Submit Question' do
 		end
 	end
 end
+
+feature 'View Question' do
+	context 'concerning delete button' do
+		it 'should show if user wrote question' do
+			sign_in
+			new_question
+			page.should have_button "Delete"
+		end
+
+		it 'should not show if user is not author' do
+			qs = two_questions
+			sign_in
+			visit question_path(qs.first)
+			page.should_not have_button "Delete"
+		end
+	end
+end

@@ -28,7 +28,7 @@ describe QuestionsController do
 			@q = @qs.first
 			get :show, id: @q.id
 			expect(assigns(:question)).to eq(@q)
-		end
+		end		
 	end
 
 	describe "POST #create" do
