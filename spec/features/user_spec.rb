@@ -21,3 +21,30 @@ feature 'Create User' do
 		}.to change(User, :count).by(1)
 	end
 end
+
+
+feature "Visit Profile" do
+	before(:each) do
+		@user = User.create!(:handle => "Test1", :email => "a@b.com", :password => "abc123", :password_confirmation=> "abc123")
+	end
+	it "be able to visit the profile" do
+		visit user_path(@user.id)
+
+		page.should have_content "Profile"
+	end
+
+	it "be able to click on all questions and get all user questions" do
+		visit user_path(@user.id)
+		click_link('All user questions')
+
+		page.should have_content('All Questions')
+	end
+
+	it "be able to click on all answers and get all user answers" do
+		visit user_path(@user.id)
+		click_link('All user answers')
+
+		page.should have_content('All Answers')
+	end
+
+end

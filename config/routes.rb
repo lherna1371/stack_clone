@@ -2,13 +2,14 @@ StackClone::Application.routes.draw do
 
   resources :questions
 
-
+   resources :users do
+    resources :questions, only: [:index]
+    resources :answers, only: [:index]
+  end
 
   resources :answers do
     resources :comments, only:[:create, :new]
   end
-
-  resources :users
 
   resources :answers
 
