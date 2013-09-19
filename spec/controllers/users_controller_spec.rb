@@ -37,19 +37,23 @@ feature UsersController do
 	describe 'GET #edit' do
 		context 'for current user' do
 			it 'should render page for current user' do
-				controller.stub(:current_user).and_return(double(:user, :id=>2))
+				controller.stub(:current_user).and_return(double(:user, :id=>1))
 
-				user = double(:user, :id => 1)
-				User.should_receive(:find).with(user.id).and_return user
+				current_user = double(:user, :id => 1)
+				User.should_receive(:find).with(current_user.id).and_return current_user
 
-				get :edit, :id => user.id
-				assigns(:user).should == user
+				get :edit, :id => current_user.id
+				assigns(:user).should == current_user
 			end
 		end
 
 		context 'for unauthorized users' do
 			it 'should turn away user' do
-
+				controller.stub(:current_user).and_return false
+				user = double(:user, :id => 1)
+				
+				get :edit, :id => user.id
+				response.should redirect_to login_path
 			end
 		end
 	end

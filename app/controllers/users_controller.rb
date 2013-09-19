@@ -19,6 +19,10 @@ class UsersController < ApplicationController
   end
 
   def edit
-  	@user = User.find(params[:id].to_i)
+  	if current_user
+  		@user = User.find(current_user.id)
+  	else
+  		redirect_to login_path
+  	end
   end
 end
