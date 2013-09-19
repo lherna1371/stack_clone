@@ -10,7 +10,7 @@ describe "Sessions" do
 
 		click_button 'Login'
 
-		current_path.should == users_path
+		current_path.should == questions_path
 	end
 
 	it "should be able to log out a user" do
