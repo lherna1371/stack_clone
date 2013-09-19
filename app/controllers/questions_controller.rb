@@ -1,7 +1,11 @@
 class QuestionsController < ApplicationController
 
 	def index
-		@questions = Question.all
+		if params[:user_id]
+      @questions = User.find(params[:user_id]).questions
+    else
+      @questions = Question.all
+    end
 	end
 
 	def new
