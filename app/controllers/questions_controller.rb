@@ -42,8 +42,8 @@ class QuestionsController < ApplicationController
 	end
 
 	def destroy
-		@question = Question.find(params[:id].to_i)
-		if @question.user.id == current_user.id
+		@question = Question.find(params[:id])
+		if @question.user_id == current_user.id
 			@question.destroy
 			redirect_to questions_path
 		else
