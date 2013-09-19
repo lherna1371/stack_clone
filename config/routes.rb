@@ -11,6 +11,12 @@ StackClone::Application.routes.draw do
     resources :comments, only:[:create, :new]
   end
 
+  resources :questions do
+    resources :comments, only:[:create, :new]
+  end
+
+  resources :users
+
   resources :answers
 
   resources :sessions, only: [:new, :create, :destroy]
