@@ -6,6 +6,7 @@ class QuestionsController < ApplicationController
 	def create
 		if true #current_user
 			@question = Question.new(params[:question])
+			@question.user_id = current_user.id
 			if @question.title.nil?
 				@error = "Error: Question Must Have Title"
 				render new_question_path
