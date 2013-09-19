@@ -1,0 +1,6 @@
+<h1><%= @user.handle.capitalize %>'s Profile</h1>
+<p>User: <%= @user.handle %></p>
+<p>Created: <%= ((Time.now - @user.created_at) / 86400).floor %> days ago</p>
+
+<p><%= link_to 'All user questions', user_questions_path(@user)%></p>
+<p><%= link_to 'All user answers', user_answers_path(@user)%></p>

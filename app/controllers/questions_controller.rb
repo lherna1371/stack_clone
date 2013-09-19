@@ -1,7 +1,11 @@
 class QuestionsController < ApplicationController
 
 	def index
-		@questions = Question.all
+		if params[:user_id]
+      @questions = User.find(params[:user_id]).questions
+    else
+      @questions = Question.all
+    end
 	end
 
 	def new
@@ -34,6 +38,17 @@ class QuestionsController < ApplicationController
 			end
 		else
 			redirect_to login_path
+		end
+	end
+
+	def destroy
+		@question = Question.find(params[:id])
+		if @question.user_id == current_user.id
+			@question.destroy
+			redirect_to questions_path
+		else
+			@error = "You are not authorized to delete this question"
+			redirect_to question_path(@question)
 		end
 	end
 end
