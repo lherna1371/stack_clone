@@ -25,4 +25,12 @@ feature UsersController do
 	  	 expect { User.create!(@attr) }.to change(User, :count).by(1)
 	  end
 	end
+
+	describe "should be able to find user for show" do
+		it "will be able to send the params for the user for profile page" do
+			user = double(:user, :id => "1", :handle => "test", :password_digest => "test")
+      User.should_receive(:find).with(user.id).and_return user
+      get :show, :id => user.id
+		end
+	end
 end
