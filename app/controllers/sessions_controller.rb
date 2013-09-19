@@ -7,7 +7,6 @@ class SessionsController < ApplicationController
       session[:user_id] = @user.id
       redirect_to users_path
     else
-      puts @errors = "Username and Password didn't match"
       redirect_to('/')
     end
   end
