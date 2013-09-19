@@ -33,4 +33,24 @@ feature UsersController do
       get :show, :id => user.id
 		end
 	end
+
+	describe 'GET #edit' do
+		context 'for current user' do
+			it 'should render page for current user' do
+				controller.stub(:current_user).and_return(double(:user, :id=>2))
+
+				user = double(:user, :id => 1)
+				User.should_receive(:find).with(user.id).and_return user
+
+				get :edit, :id => user.id
+				assigns(:user).should == user
+			end
+		end
+
+		context 'for unauthorized users' do
+			it 'should turn away user' do
+
+			end
+		end
+	end
 end

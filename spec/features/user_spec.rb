@@ -10,7 +10,6 @@ end
 
 feature 'Create User' do
 	it "should save to database" do
-		sign_in
 		visit new_user_path
 		expect {
 			fill_in 'user_handle', with: 'username'
@@ -46,5 +45,15 @@ feature "Visit Profile" do
 
 		page.should have_content('All Answers')
 	end
+end
 
+feature 'User Profile' do
+	before(:each) do
+		sign_in
+		click_link 'Profile'
+	end
+
+	it "should see Edit Profile link in Profile Page" do
+		page.should have_content 'Edit Profile'
+	end
 end
