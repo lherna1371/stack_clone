@@ -5,7 +5,11 @@ class QuestionsController < ApplicationController
 	end
 
 	def new
-		@question = Question.new
+		if current_user
+			@question = Question.new
+		else
+			redirect_to login_path
+		end
 	end
 	
 	def show
