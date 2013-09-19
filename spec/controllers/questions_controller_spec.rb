@@ -1,8 +1,22 @@
 require 'spec_helper'
+include QuestionHelper
 
-feature QuestionsController do
+
+describe QuestionsController do
 	describe "GET #index" do
-		get :index
-		response.should redirect_to new_post_path
+
+		before(:each) do
+			@qs = two_questions
+		end
+
+		it "should route to questions_path" do
+			get :index
+			response.should render_template('index')
+		end
+
+		it "should assign @questions" do
+			get :index
+			expect(assigns(:questions)).to eq(@qs)
+		end
 	end
 end
