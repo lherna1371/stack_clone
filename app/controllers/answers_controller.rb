@@ -1,10 +1,9 @@
 class AnswersController < ApplicationController
 
 	def create
-		puts params
-		@answer = Answer.new(:content => params[:content], :user_id => 1, :question_id => params[:question_id])
-		@answer.save 
-		# current_user has not been implemented?
-		# redirect_to question page or answer confirmation page?
+		# puts "++++++++++++++++++++++++++++++++++++++"
+		# puts current_user.id
+		# puts params[:answer][:content]
+		@answer = Answer.create(:content => params[:answer][:content], :user_id => current_user.id, :question_id => params[:answer][:question_id].to_i) 
 	end
 end
