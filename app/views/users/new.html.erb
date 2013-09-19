@@ -12,8 +12,14 @@
   
   <p>
     <%= f.label :password %><br>
-    <%= f.password_field :password_digest %>
+    <%= f.password_field :password%>
   </p>
+
+  <p>
+    <%= f.label :confirm_password %><br>
+    <%= f.password_field :password_confirmation%>
+  </p>
+
 
   <p>
     <%= f.submit "Create User" %>
