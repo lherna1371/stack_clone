@@ -8,6 +8,6 @@
 	
 	<%= f.label :content %>
 	<%= f.text_area :content, :size => "30x5" %><br>
-	
+	<%= f.hidden_field :user_id, :value => current_user.id.to_i %>
 	<%= f.submit %>
 <% end %>

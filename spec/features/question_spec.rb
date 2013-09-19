@@ -21,11 +21,12 @@ feature 'Submit Question' do
 		describe "on success" do 
 			it "should save to database" do
 				visit new_question_path
+				
 				expect {
 					fill_in 'question_title', with: 'Best Language?'
 					fill_in 'question_content', with: "What's the best language?"
 					click_button 'Create Question'
-				}.to change(Question, count).by(1)
+				}.to change(Question, :count).by(1)
 			end
 		end
 
