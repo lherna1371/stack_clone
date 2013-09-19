@@ -11,6 +11,14 @@ Content: <%= @question.content %>
 </tr>
 <% end %>
 
+
+<% if current_user && current_user == @question.user %>
+	<%= form_for @question, :method => :delete do |f| %>
+		<%= f.button 'Delete' %>
+	<% end %>
+<% end %>
+
+
 <h2>Answer Question:</h2>
 
 <%= form_for :answer, url: answers_path do |f| %>	
