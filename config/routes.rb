@@ -25,7 +25,8 @@ StackClone::Application.routes.draw do
 
   get '/upvote', to: 'questions#upvote'
   get '/downvote', to: 'questions#downvote'
-
+  get '/answerup', to: 'answers#upvote'
+  get '/answerdown', to: 'answers#downvote'
 
 
   # The priority is based upon order of creation: first c1reated -> highest priority.
