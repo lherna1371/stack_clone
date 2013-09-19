@@ -5,9 +5,9 @@ class SessionsController < ApplicationController
     
     if @user.authenticate(params[:session][:password])
       session[:user_id] = @user.id
-      redirect_to users_path
+      redirect_to questions_path
     else
-      redirect_to('/')
+      redirect_to root_path
     end
   end
 

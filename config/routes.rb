@@ -2,7 +2,10 @@ StackClone::Application.routes.draw do
 
   resources :questions
 
-  resources :users
+   resources :users do
+    resources :questions, only: [:index]
+    resources :answers, only: [:index]
+  end
 
   resources :sessions, only: [:new, :create, :destroy]
   get '/login',  to: 'sessions#new'
