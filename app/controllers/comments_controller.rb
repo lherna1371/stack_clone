@@ -1,7 +1,12 @@
 class CommentsController < ApplicationController
 
 	def new
-		@answer = Answer.find(params[:answer_id])
+		#@answer = Answer.find(params[:answer_id])
+		if params[:answer_id]
+			@resource = Answer.find
+		elsif params[:question_id]
+			
+
 	end
 
 	def create
