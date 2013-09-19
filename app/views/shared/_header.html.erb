@@ -1,6 +1,6 @@
 <ul class="header">
     <li><%= link_to "StackUnderFlow", questions_path %></li>
-    <% if logged_in? %>
+     <% if logged_in? %>
        <li><%= link_to "Logout", logout_path %></li>
        <li><%= link_to "Profile", user_path(current_user.id) %></li>
     <% else %>
