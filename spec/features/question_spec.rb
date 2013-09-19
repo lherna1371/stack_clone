@@ -1,4 +1,5 @@
 require 'spec_helper'
+include UserHelper
 
 feature 'Create Question Form' do
 	context "for signed in user" do
@@ -20,6 +21,7 @@ feature 'Submit Question' do
 	context "for signed in user" do
 		describe "on success" do 
 			it "should save to database" do
+				sign_in
 				visit new_question_path
 				
 				expect {
@@ -42,7 +44,6 @@ feature 'Submit Question' do
 
 	context "for unsigned-in user" do
 		it "should redirect to sign in path" do
-			pending
 			page.should have_content "Sign In"
 		end
 	end
