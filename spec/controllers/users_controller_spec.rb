@@ -11,7 +11,7 @@ feature UsersController do
 		end
 	end
 
-	describe "Post create" do
+	describe "Create User" do
 		before(:each) do
   		@attr = { 
 	  		:handle => "Example", 
