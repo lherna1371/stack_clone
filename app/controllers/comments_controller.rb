@@ -6,7 +6,8 @@ class CommentsController < ApplicationController
 
 	def create
 		@answer = Answer.find(params[:answer_id])
+		@question = Question.find(@answer.question_id)
     @comment = @answer.comments.create(content: params[:comment][:content], user_id: current_user.id)
-    render "wow"
+    redirect_to @question
 	end
 end
