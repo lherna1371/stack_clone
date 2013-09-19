@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe UsersController do
+feature UsersController do
 	describe "GET index" do
 		it "should be able to get the user index" do
 			User.create(handle: "handle",email: "test@test.com",password_digest: "password")
@@ -12,11 +12,17 @@ describe UsersController do
 	end
 
 	describe "Post create" do
-		it "should be able to create a new user" do
-			a = User.create(handle: "handle",email: "test@test.com",password_digest: "password")
-			a.save
-			
-			response.should be_success
-		end
+		before(:each) do
+  		@attr = { 
+	  		:handle => "Example", 
+	  		:email => "user@example.com",
+	  		:password => "foobar",
+	  		:password_confirmation => "foobar"
+	  	}
+	  end
+
+	 	it "should create a new instance given valid attributes" do
+	  	 expect { User.create!(@attr) }.to change(User, :count).by(1)
+	  end
 	end
 end

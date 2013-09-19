@@ -19,7 +19,7 @@ class QuestionsController < ApplicationController
 	def create
 		if current_user
 			@question = Question.new(:title => params[:question][:title], :content => params[:question][:content], :user_id => params[:question][:user_id].to_i)
-			if @question.title.nil?
+			if @question.title == ''
 				@error = "Error: Question Must Have Title"
 				render new_question_path
 			elsif @question.content.nil?

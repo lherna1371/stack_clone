@@ -5,7 +5,12 @@ module UserHelper
   end
 
   def sign_in
-  	u = User.create!(:handle => "Test3", :email => "a@c.com", :password => "abc123", :password_confirmation => "abc123")
+  	a = User.create!(handle: "handle",email: "test@test.com",password: "password", password_confirmation: "password")
+  	visit login_path
+  	fill_in 'session_handle', with: "handle"
+  	fill_in 'session_password', with: "password"
   	
+  	click_button 'Login'
+				
   end
 end
