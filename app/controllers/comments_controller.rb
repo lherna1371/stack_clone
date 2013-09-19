@@ -6,8 +6,7 @@ class CommentsController < ApplicationController
 
 	def create
 		@answer = Answer.find(params[:answer_id])
-    @comment = @answer.comments.create(params[:comment].merge({:user_id => current_user.id}))
-    redirect_to @answer
+    @comment = @answer.comments.create(content: params[:comment][:content], user_id: current_user.id)
+    render "wow"
 	end
-
 end
