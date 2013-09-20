@@ -7,7 +7,8 @@ module UserHelper
 
   def sign_in
   	a = User.create!(handle: "handle",email: "test@test.com",password: "password", password_confirmation: "password")
-  	visit login_path
+  	a.questions.create(:title => 'TestQ', :content => "Current Content")
+    visit login_path
   	fill_in 'session_handle', with: "handle"
   	fill_in 'session_password', with: "password"
   	

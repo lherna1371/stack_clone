@@ -74,7 +74,56 @@ feature 'Search Bar' do
 		page.should have_content "sample question one"
 		page.should_not have_content "sample question two"
 	end 
-end 
+end
+
+feature 'Edit Question' do
+	context "As Admin" do
+		before(:each) do
+			sign_in_admin
+			click_link 'All user questions'
+			page.should have_content "TestQ"
+			click_link 'TestQ'
+			click_link 'Edit'
+			page.should have_content 'Edit Question'
+		end
+
+		it "should be able to edit other users' Question Title" do
+			fill_in 'question_title', with: 'TestR'
+			click_button 'Update Question'
+			page.should have_content 'TestR'
+		end
+
+		it "should be able to edit other users' Question Content" do
+			fill_in 'question_content', with: 'Content After'
+			click_button 'Update Question'
+			page.should have_content 'Content After'
+		end
+	end
+
+	context "as question owner" do
+		before(:each) do
+			sign_in
+			click_link 'Profile'
+			click_link 'All user questions'
+			page.should have_content "TestQ"
+			click_link 'TestQ'
+			click_link 'Edit'
+			page.should have_content 'Edit Question'
+		end
+
+		it "should be able to edit Question Title" do
+			fill_in 'question_title', with: 'TestR'
+			click_button 'Update Question'
+			page.should have_content 'TestR'
+		end
+
+		it "should be able to edit Question Content" do
+			fill_in 'question_content', with: 'Content After'
+			click_button 'Update Question'
+			page.should have_content 'Content After'
+		end
+	end
+end
 
 
 
