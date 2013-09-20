@@ -1,7 +1,6 @@
 class CommentsController < ApplicationController
 
 	def new
-		#@answer = Answer.find(params[:answer_id])
 		if params[:answer_id]
 			@resource = Answer.find(params[:answer_id])
 		elsif params[:question_id]
@@ -11,6 +10,12 @@ class CommentsController < ApplicationController
 
 	def create
 
+		if params[:comment][:content].blank?
+			# @error = "You submitted a blank comment try again"
+			flash[:error] = "You submitted a blank comment try again"
+			redirect_to new_answer_comment_path(params[:answer_id])
+			return
+		end
 
 		if params[:answer_id]
 			@answer = Answer.find(params[:answer_id])
