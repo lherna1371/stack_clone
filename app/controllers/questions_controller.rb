@@ -81,6 +81,22 @@ class QuestionsController < ApplicationController
 	end
 
 
+	def favorite
+		@question = Question.find(params[:id])
+	    type = params[:type]
+	    if type == "favorite"
+	      current_user.favorites << @question
+	      redirect_to :back, notice: 'You favorited #{@question.name}'
+
+	    elsif type == "unfavorite"
+	      current_user.favorites.delete(@question)
+	      redirect_to :back, notice: 'Unfavorited #{@question.name}'
+
+	    else
+	      redirect_to :back, notice: 'Nothing happened.'
+	    end
+  	end
+
   private
 
   def question_attributes

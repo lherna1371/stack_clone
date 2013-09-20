@@ -129,4 +129,25 @@ describe QuestionsController do
 			end
 		end
 	end
+
+	describe 'POST #favorite' do
+		context 'can be saved to favorites' do
+			it 'should save if type equalls favorite' do
+				user = User.create(handle: "handle",email: "test@test.com",password_digest: "password")
+				q = Question.create(:title => 'Test', :content => 'Test2', :user_id => 1,:up_votes => 0, :down_votes => 0)
+	    		type = "favorite"
+	    		expect user.favorites << q
+			end  
+		end 
+
+		context 'should delete from favorites' do
+			it 'should not delete from favorites if type equalls Unfavorited' do
+				user = User.create(handle: "handle",email: "test@test.com",password_digest: "password")
+				q = Question.create(:title => 'Test', :content => 'Test2', :user_id => 1,:up_votes => 0, :down_votes => 0)
+	    		type = "Unfavorited"
+	    		expect user.favorites.delete(q)
+			end  
+		end 
+	end 
 end
+
