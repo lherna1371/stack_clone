@@ -12,7 +12,7 @@ Content: <%= @question.content %>
 
 <% @answers.each do |answer| %>
 <tr>
-  <td><%= answer.content %></td> <%= link_to "up", answerup_path(answer)%> <%= link_to "down", answerdown_path(answer)%>Votes: <%= answer.votecount %><br>
+  <td><%= answer.content %></td> <%= link_to "up", answerup_path(answer.id)%> <%= link_to "down", answerdown_path(answer.id)%>Votes: <%= answer.votecount %><br>
   <td>Posted: <%= answer.created_at %></td><br><br>
 </tr>
 <% end %>
