@@ -1,6 +1,10 @@
+
+
+<p><%= flash[:error] %></p> 
 <h2><%= @resource.class %>:</h2>
 <p>Content:</p>  
 <%= @resource.content %>
+
 
 <%= form_for([@resource, @resource.comments.build]) do |f| %>
   

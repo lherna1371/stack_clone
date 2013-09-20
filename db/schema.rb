@@ -12,9 +12,13 @@
 # It's strongly recommended that you check this file into your version control system.
 
 
+
 # These are extensions that must be enabled in order to support this database
 # enable_extension "plpgsql"
   
+
+ActiveRecord::Schema.define(version: 20130918235525) do
+>>>>>>> 4690fe8b28a678448a5c18af537d9291b0f5052b
 
   create_table "answers", force: true do |t|
     t.integer  "user_id"
