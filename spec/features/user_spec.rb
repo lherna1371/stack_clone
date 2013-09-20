@@ -29,7 +29,7 @@ feature "Visit Profile" do
 	it "be able to visit the profile" do
 		visit user_path(@user.id)
 
-		page.should have_content "Profile"
+		page.should have_content "#{@user.handle.capitalize}"
 	end
 
 	it "be able to click on all questions and get all user questions" do
@@ -50,7 +50,7 @@ end
 feature 'User Profile' do
 	before(:each) do
 		sign_in
-		click_link 'Profile'
+		click_link 'Handle'
 	end
 
 	context 'with Editing' do
@@ -67,7 +67,7 @@ feature 'User Profile' do
 			fill_in 'session_handle', with: 'handle2'
 			fill_in 'session_password', with: 'password'
 			click_button 'Login'
-			click_link 'Profile'
+			click_link 'Handle2'
 			page.should have_content "Handle2's Profile"
 		end
 	end
@@ -88,7 +88,7 @@ feature 'Admin Capabilities' do
 			fill_in 'session_handle', with: 'handle3'
 			fill_in 'session_password', with: 'password'
 			click_button 'Login'
-			click_link 'Profile'
+			click_link 'Handle3'
 			page.should have_content "Handle3's Profile"
 		end
 
