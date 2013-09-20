@@ -91,5 +91,18 @@ feature 'Admin Capabilities' do
 			click_link 'Profile'
 			page.should have_content "Handle3's Profile"
 		end
+
+		it "should be able to disable another user account" do
+			pending
+		end
+	end
+
+	context "Postings" do
+		it "should be able to edit other users' Questions" do
+			click_link 'All user questions'
+			page.should have_content "TestQ"
+			click_link 'TestQ'
+			click_link 'Edit'
+		end
 	end
 end
