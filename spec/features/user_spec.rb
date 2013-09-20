@@ -53,7 +53,21 @@ feature 'User Profile' do
 		click_link 'Profile'
 	end
 
-	it "should see Edit Profile link in Profile Page" do
-		page.should have_content 'Edit Profile'
+	context 'with Editing' do
+		it "should see Edit Profile link in Profile Page" do
+			page.should have_content 'Edit Profile'
+		end
+
+		it "should change handle" do 
+			click_link 'Edit Profile'
+			fill_in 'user_handle', with: 'handle2'
+			click_button 'Edit User'
+			visit logout_path
+			visit login_path
+			fill_in 'session_handle', with: 'handle2'
+			fill_in 'session_password', with: 'password'
+			click_button 'Login'
+			page.should have_content 'Profile'
+		end
 	end
 end

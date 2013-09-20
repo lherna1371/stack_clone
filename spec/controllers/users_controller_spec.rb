@@ -44,6 +44,7 @@ feature UsersController do
 
 				get :edit, :id => current_user.id
 				assigns(:user).should == current_user
+				response.should render_template 'edit'
 			end
 		end
 
