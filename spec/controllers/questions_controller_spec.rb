@@ -17,6 +17,11 @@ describe QuestionsController do
 			get :index
 			expect(assigns(:questions)).to eq(@qs)
 		end
+
+		it "should only assign questions that match search" do
+			get :index, search: "Test2"
+			expect(assigns(:questions)).to eq([@qs.last])
+		end
 	end
 
 	describe "GET #show" do

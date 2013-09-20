@@ -60,3 +60,32 @@ feature 'View Question' do
 		end
 	end
 end
+
+feature 'Search Bar' do
+	it 'should return match based on input' do
+		Question.create(:user_id => 1, title: "sample question one", :content => "hey there dude")
+		Question.create(:user_id => 1, title: "sample question two", :content => "wazzup")
+
+		sign_in
+		visit questions_path
+		fill_in 'search', with: "dude"
+		click_button 'Search'
+
+		page.should have_content "sample question one"
+		page.should_not have_content "sample question two"
+	end 
+end 
+
+
+
+
+
+
+
+
+
+
+
+
+
+

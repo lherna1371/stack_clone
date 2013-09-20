@@ -1,7 +1,8 @@
 class QuestionsController < ApplicationController
 
 	def index
-		@questions = Question.all
+		# @questions = Question.all
+		@questions = Question.search(params[:search])
 	end
 
 	def new
