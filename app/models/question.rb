@@ -6,6 +6,6 @@ class Question < ActiveRecord::Base
 	validates_presence_of :user_id
 
 	def votecount
-			self.up_votes + self.down_votes
+		self.up_votes + self.down_votes
 	end
 end
