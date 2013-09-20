@@ -23,10 +23,12 @@ StackClone::Application.routes.draw do
   get '/login',  to: 'sessions#new'
   get '/logout', to: 'sessions#destroy'
 
+  get '/upvote', to: 'questions#upvote'
+  get '/downvote', to: 'questions#downvote'
 
 
 
-  # The priority is based upon order of creation: first created -> highest priority.
+  # The priority is based upon order of creation: first c1reated -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"

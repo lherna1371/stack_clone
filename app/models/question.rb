@@ -5,7 +5,6 @@ class Question < ActiveRecord::Base
 	validates_presence_of :content
 	validates_presence_of :user_id
 
-
   def self.search(search)
     if search
       where('title LIKE :word OR content LIKE :word', word: "%#{search.strip}%").to_a
@@ -14,5 +13,8 @@ class Question < ActiveRecord::Base
     end
   end
 
+	def votecount
+			self.up_votes + self.down_votes
+	end
 end
 

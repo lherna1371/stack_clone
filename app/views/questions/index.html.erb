@@ -1,11 +1,9 @@
-<h1>All Questions</h1><br>
-
-
 <%= form_tag questions_path, :method => 'get' do %>
     <%= text_field_tag :search, params[:search] %>
     <%= submit_tag "Search", :name => nil %>
 <% end %>
 
+<h1>All Questions</h1>
 
 <ul>
 <% @questions.each do |q| %>
