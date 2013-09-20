@@ -3,19 +3,19 @@ require 'spec_helper'
 describe Question do
 	context "with invalid attributes" do
 		it "is invalid without a title" do 
-			q = Question.new(:user_id => 1, :content => "hey")
+			q = Question.new(:user_id => 1, :content => "hey",:up_votes => 0, :down_votes => 0)
 			q.save
 			q.should_not be_valid
 		end
 
 		it "is invalid without content" do 
-			q = Question.new(:user_id => 1, :title => "hey")
+			q = Question.new(:user_id => 1, :title => "hey",:up_votes => 0, :down_votes => 0)
 			q.save
 			q.should_not be_valid
 		end
 
 		it "is invalid without a user" do 
-			q = Question.new(:title => "yo", :content => "hey")
+			q = Question.new(:title => "yo", :content => "hey",:up_votes => 0, :down_votes => 0)
 			q.save
 			q.should_not be_valid
 		end
@@ -23,7 +23,7 @@ describe Question do
 
 	describe ".search" do
 
-		let!(:question) { Question.create(:user_id => 1, title: "sample question one", :content => "hey there dude") }
+		let!(:question) { Question.create(:user_id => 1, title: "sample question one", :content => "hey there dude",:up_votes => 0, :down_votes => 0) }
 
 		context "works for exact matches" do
 			it "on content" do
