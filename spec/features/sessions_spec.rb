@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Sessions" do
 	it "should be able to log in a user" do
-		User.create!(:handle => "Test1", :email => "a@b.com", :password => "abc123", :password_confirmation=> "abc123")
+		u = User.create!(:handle => "Test1", :email => "a@b.com", :password => "abc123", :password_confirmation=> "abc123")
 
 		visit ('/login')
 		fill_in 'session_handle', with: 'Test1'

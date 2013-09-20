@@ -1,6 +1,13 @@
+<%= form_tag questions_path, :method => 'get' do %>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+<% end %>
 
 <h1>All Questions</h1>
 
-<% @questions.each do |q| %> 
-	<%= link_to q.title, q %><br>
+<ul>
+<% @questions.each do |q| %>
+	<li><%= link_to q.title, q %></li>
 <% end %>
+</ul>
+
