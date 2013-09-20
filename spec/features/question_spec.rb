@@ -123,6 +123,18 @@ feature 'Edit Question' do
 			page.should have_content 'Content After'
 		end
 	end
+
+	context "As Non-Admin/Non-Author Signed In User" do
+		before(:each) do
+			two_users
+			click_link 'All user questions'
+			click_link 'TestQ'
+		end
+
+		it "should not be able to see edit link on other users' questions" do
+			page.should_not have_content "Edit"
+		end
+	end
 end
 
 
