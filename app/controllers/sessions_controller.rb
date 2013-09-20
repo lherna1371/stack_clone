@@ -7,7 +7,8 @@ class SessionsController < ApplicationController
       session[:user_id] = @user.id
       redirect_to questions_path
     else
-      redirect_to root_path
+     flash[:error] = "Handle or Password is incorrect"
+      redirect_to login_path
     end
   end
 
