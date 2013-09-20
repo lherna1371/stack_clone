@@ -67,7 +67,29 @@ feature 'User Profile' do
 			fill_in 'session_handle', with: 'handle2'
 			fill_in 'session_password', with: 'password'
 			click_button 'Login'
-			page.should have_content 'Profile'
+			click_link 'Profile'
+			page.should have_content "Handle2's Profile"
+		end
+	end
+end
+
+feature 'Admin Capabilities' do
+	before(:each) do
+		sign_in_admin
+	end
+
+	context "User Profile" do
+		it "should be able to edit other users' profiles" do
+			click_link 'Edit Profile'
+			fill_in 'user_handle', with: 'handle3'
+			click_button 'Edit User'
+			visit logout_path
+			visit login_path
+			fill_in 'session_handle', with: 'handle3'
+			fill_in 'session_password', with: 'password'
+			click_button 'Login'
+			click_link 'Profile'
+			page.should have_content "Handle3's Profile"
 		end
 	end
 end

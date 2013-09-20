@@ -37,9 +37,9 @@ feature UsersController do
 	describe 'GET #edit' do
 		context 'for current user' do
 			it 'should render page for current user' do
-				controller.stub(:current_user).and_return(double(:user, :id=>1))
+				current_user = double(:user, :id => 1, :admin => false)
+				controller.stub(:current_user).and_return(current_user)
 
-				current_user = double(:user, :id => 1)
 				User.should_receive(:find).with(current_user.id).and_return current_user
 
 				get :edit, :id => current_user.id
@@ -48,11 +48,21 @@ feature UsersController do
 			end
 		end
 
+		context 'for admin' do
+			it "should render page for other users" do
+				controller.stub(:current_user).and_return(double(:user, :admin => true, :id => 1))
+				user = double(:user, :id => 2, :handle => 'Other')
+				User.should_receive(:find).with("2").and_return user
+				
+				get :edit, :id => user.id
+				response.should render_template 'edit'
+			end
+		end
+
 		context 'for unauthorized users' do
 			it 'should turn away user' do
 				controller.stub(:current_user).and_return false
 				user = double(:user, :id => 1)
-				
 				get :edit, :id => user.id
 				response.should redirect_to login_path
 			end

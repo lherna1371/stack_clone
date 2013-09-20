@@ -24,7 +24,11 @@ class UsersController < ApplicationController
 
   def edit
   	if current_user
-  		@user = User.find(current_user.id)
+  		if current_user.admin
+  			@user = User.find(params[:id])
+  		else
+  			@user = User.find(current_user.id)
+  		end
   	else
   		redirect_to login_path
   	end
