@@ -7,8 +7,6 @@
 
 <ul>
 <% @questions.each do |q| %>
-	<%= link_to q.title, q %><br>
-<% end %>
 	<li><%= link_to q.title, q %></li>
 <% end %>
 </ul>
