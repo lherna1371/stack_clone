@@ -3,6 +3,10 @@ class UsersController < ApplicationController
 		@users = User.all
 	end
 
+  def favorite
+    @user = User.find(current_user.id)
+  end 
+
 	def new
 		@user = User.new
 	end
