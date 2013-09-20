@@ -1,11 +1,13 @@
 
 
-<%= link_to "up", upvote_path(@question.id)%> <%= link_to "down", downvote_path(@question.id)%>Votes: <%= @question.votecount %>
+<%= link_to "up", upvote_path(@question.id)%> <%= link_to "down", downvote_path(@question.id)%>Votes: <%= votecount(@question) %>
 <h2>Question:</h2>
-<h3>Title: <%= @question.title %></h3><br>
+<h3>Title: <%= @question.title %></h3>
+<%= link_to 'Edit', edit_question_path(@question) %>
+<br>
 
 Content: <%= @question.content %>
-<%= link_to "up", upvote_path(@question.id)%> <%= link_to "down", downvote_path(@question.id)%>Votes: <%= @question.votecount %>
+<%= link_to "up", upvote_path(@question.id)%> <%= link_to "down", downvote_path(@question.id)%>Votes: <%=votecount(@question) %>
 
 <p>Total answers: <%= @answers.count %></p>
 
