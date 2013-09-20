@@ -2,8 +2,8 @@ require 'spec_helper'
 include UserHelper
 
 feature 'Create Comment form' do
-	let(:answer) { Answer.create(content: 'this is an answer', question_id: question.id)}
-	let(:question) { Question.create(user_id: 1, title:'Question 1', content: 'This is a question') }
+	let(:answer) { Answer.create(content: 'this is an answer', question_id: question.id,:up_votes => 0, :down_votes => 0)}
+	let(:question) { Question.create(user_id: 1, title:'Question 1', content: 'This is a question',:up_votes => 0, :down_votes => 0) }
 	
 	context "commenting on an answer" do
 

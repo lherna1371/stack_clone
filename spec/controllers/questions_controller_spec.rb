@@ -39,7 +39,7 @@ describe QuestionsController do
 	describe "POST #create" do
 		context "with valid attribs" do
 			it "should create a new post" do
-				@attr = {:title => 'Test', :content => 'Test2', :user_id => 1 }
+				@attr = {:title => 'Test', :content => 'Test2', :user_id => 1, :up_votes => 0, :down_votes => 0 }
 				expect {
 					Question.create(@attr)
 				}.to change(Question, :count).by(1)
@@ -48,21 +48,21 @@ describe QuestionsController do
 
 		context "with invalid attribs" do
 			it "should not create a new post without title" do
-				@attr = {:title => '', :content => 'Test2', :user_id => 1 }
+				@attr = {:title => '', :content => 'Test2', :user_id => 1,:up_votes => 0, :down_votes => 0  }
 				expect {
 					Question.create(@attr)
 				}.not_to change(Question, :count)
 			end
 
 			it "should not create a new post without content" do
-				@attr = {:title => 'Test', :content => '', :user_id => 1 }
+				@attr = {:title => 'Test', :content => '', :user_id => 1,:up_votes => 0, :down_votes => 0  }
 				expect {
 					Question.create(@attr)
 				}.not_to change(Question, :count)
 			end
 
 			it "should not create a new post without user" do
-				@attr = {:title => 'Test', :content => 'Test2'}
+				@attr = {:title => 'Test', :content => 'Test2',:up_votes => 0, :down_votes => 0 }
 				expect {
 					Question.create(@attr)
 				}.not_to change(Question, :count)
@@ -77,7 +77,7 @@ describe QuestionsController do
 
 		context 'as question author' do
 			it "should delete a question" do
-				@attr = {:title => 'Test', :content => 'Test2', :user_id => 1 }
+				@attr = {:title => 'Test', :content => 'Test2', :user_id => 1,:up_votes => 0, :down_votes => 0  }
 				q = Question.create!(@attr)
 				expect {
 					delete :destroy, id: q.id
@@ -87,7 +87,7 @@ describe QuestionsController do
 
 		context 'as a non-author' do
 			it 'should not delete a question' do
-				@attr = {:title => 'Test', :content => 'Test2', :user_id => 2 }
+				@attr = {:title => 'Test', :content => 'Test2', :user_id => 2,:up_votes => 0, :down_votes => 0  }
 				q = Question.create(@attr)
 				expect {
 					delete :destroy, id: q.id
