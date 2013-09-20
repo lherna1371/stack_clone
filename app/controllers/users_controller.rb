@@ -15,6 +15,7 @@ class UsersController < ApplicationController
     hash = Digest::MD5.hexdigest(email_address)
     image_src = "http://www.gravatar.com/avatar/#{hash}? s=200"
 	  @user.photo = image_src
+    
     if @user.save
 	    session[:user_id] = @user.id
 	    redirect_to users_path
