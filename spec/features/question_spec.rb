@@ -55,7 +55,7 @@ feature 'View Question' do
 		it 'should be invisible if user is not author' do
 			qs = two_questions
 			sign_in
-			visit question_path(qs.first)
+			visit question_path(qs.last)
 			page.should_not have_button "Delete"
 		end
 	end
@@ -103,7 +103,7 @@ feature 'Edit Question' do
 	context "as question owner" do
 		before(:each) do
 			sign_in
-			click_link 'Profile'
+			click_link 'Handle'
 			click_link 'All user questions'
 			page.should have_content "TestQ"
 			click_link 'TestQ'
@@ -136,17 +136,5 @@ feature 'Edit Question' do
 		end
 	end
 end
-
-
-
-
-
-
-
-
-
-
-
-
 
 

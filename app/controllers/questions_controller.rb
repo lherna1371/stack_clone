@@ -15,6 +15,12 @@ class QuestionsController < ApplicationController
 
 	def edit
 		@question = Question.find(params[:id])
+		if @question.user == current_user || current_user.admin
+			render :edit
+		else
+			flash.now[:error] = "You do not have access to edit"
+			redirect_to @question
+		end
 	end
 	
 	def update
