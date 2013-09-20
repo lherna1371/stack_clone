@@ -6,6 +6,7 @@
 
 Content: <%= @question.content %>
 <%= link_to "up", upvote_path(@question.id)%> <%= link_to "down", downvote_path(@question.id)%>Votes: <%= @question.votecount %>
+<p>Total answers: <%= @answers.count %></p>
 <h2>Answers:</h2>
 
 <% @answers.each do |answer| %>
@@ -25,7 +26,7 @@ Content: <%= @question.content %>
 
 <h2>Answer Question:</h2>
 
-<%= form_for :answer, url: answers_path do |f| %>	
+<%= form_for :answer, url: answers_path do |f| %>
 	<%= f.label :content %><br>
 	<%= f.text_area :content, :size => "30x5" %>
 	<%= f.hidden_field :question_id, :value => @question.id %><br>
