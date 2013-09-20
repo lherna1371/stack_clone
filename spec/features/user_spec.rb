@@ -96,13 +96,4 @@ feature 'Admin Capabilities' do
 			pending
 		end
 	end
-
-	context "Postings" do
-		it "should be able to edit other users' Questions" do
-			click_link 'All user questions'
-			page.should have_content "TestQ"
-			click_link 'TestQ'
-			click_link 'Edit'
-		end
-	end
 end

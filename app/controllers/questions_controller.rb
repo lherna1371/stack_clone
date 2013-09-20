@@ -14,13 +14,24 @@ class QuestionsController < ApplicationController
 	end
 
 	def edit
-
+		@question = Question.find(params[:id])
+		if @question.user == current_user || current_user.admin
+			render :edit
+		else
+			flash.now[:error] = "You do not have access to edit"
+			redirect_to @question
+		end
 	end
-		
+	
+	def update
+		@question = Question.find(params[:id])
+		@question.update_attributes(question_attributes)
+		redirect_to @question
+	end
+
 	def show
 		@answers = Answer.where(:question_id => [params[:id]])
 		@question = Question.find(params[:id])
-
 	end
 	
 	def create
@@ -56,18 +67,19 @@ class QuestionsController < ApplicationController
 	end
 
 	def upvote
-			question = Question.find(params[:format])
-			question.up_votes += 1
-			question.save
-			redirect_to question_path(question)
+		question = Question.find(params[:format])
+		question.up_votes += 1
+		question.save
+		redirect_to question_path(question)
 	end
 
-		def downvote
-			question = Question.find(params[:format])
-			question.down_votes -= 1
-			question.save
-			redirect_to question_path(question)
+	def downvote
+		question = Question.find(params[:format])
+		question.down_votes -= 1
+		question.save
+		redirect_to question_path(question)
 	end
+
 
 	def favorite
 		@question = Question.find(params[:id])
@@ -84,4 +96,10 @@ class QuestionsController < ApplicationController
 	      redirect_to :back, notice: 'Nothing happened.'
 	    end
   	end
+
+  private
+
+  def question_attributes
+  	params.require(:question).permit(:title, :content)
+  end
 end

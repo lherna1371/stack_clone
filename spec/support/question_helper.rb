@@ -1,7 +1,9 @@
 module QuestionHelper
 	def two_questions
-	a = Question.create!(:user_id => 1, :title => 'Test1', :content => 'content 1',:up_votes => 0, :down_votes => 0)
-    b = Question.create!(:user_id => 1, :title => 'Test2', :content => 'content 2',:up_votes => 0, :down_votes => 0)
+		d = User.create!(handle: "handle2",email: "test6@test.com",password: "password", password_confirmation: "password")
+		c = User.create!(handle: "handle",email: "test5@test.com",password: "password", password_confirmation: "password")
+		a = c.questions.create!(:title => 'Test1', :content => 'content 1',:up_votes => 0, :down_votes => 0)
+    b = d.questions.create!(:title => 'Test2', :content => 'content 2',:up_votes => 0, :down_votes => 0)
   	[a, b]
   end
 
