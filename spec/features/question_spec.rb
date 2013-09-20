@@ -55,7 +55,7 @@ feature 'View Question' do
 		it 'should be invisible if user is not author' do
 			qs = two_questions
 			sign_in
-			visit question_path(qs.first)
+			visit question_path(qs.last)
 			page.should_not have_button "Delete"
 		end
 	end
@@ -74,18 +74,67 @@ feature 'Search Bar' do
 		page.should have_content "sample question one"
 		page.should_not have_content "sample question two"
 	end 
-end 
+end
 
+feature 'Edit Question' do
+	context "As Admin" do
+		before(:each) do
+			sign_in_admin
+			click_link 'All user questions'
+			page.should have_content "TestQ"
+			click_link 'TestQ'
+			click_link 'Edit'
+			page.should have_content 'Edit Question'
+		end
 
+		it "should be able to edit other users' Question Title" do
+			fill_in 'question_title', with: 'TestR'
+			click_button 'Update Question'
+			page.should have_content 'TestR'
+		end
 
+		it "should be able to edit other users' Question Content" do
+			fill_in 'question_content', with: 'Content After'
+			click_button 'Update Question'
+			page.should have_content 'Content After'
+		end
+	end
 
+	context "as question owner" do
+		before(:each) do
+			sign_in
+			click_link 'Handle'
+			click_link 'All user questions'
+			page.should have_content "TestQ"
+			click_link 'TestQ'
+			click_link 'Edit'
+			page.should have_content 'Edit Question'
+		end
 
+		it "should be able to edit Question Title" do
+			fill_in 'question_title', with: 'TestR'
+			click_button 'Update Question'
+			page.should have_content 'TestR'
+		end
 
+		it "should be able to edit Question Content" do
+			fill_in 'question_content', with: 'Content After'
+			click_button 'Update Question'
+			page.should have_content 'Content After'
+		end
+	end
 
+	context "As Non-Admin/Non-Author Signed In User" do
+		before(:each) do
+			two_users
+			click_link 'All user questions'
+			click_link 'TestQ'
+		end
 
-
-
-
-
+		it "should not be able to see edit link on other users' questions" do
+			page.should_not have_content "Edit"
+		end
+	end
+end
 
 

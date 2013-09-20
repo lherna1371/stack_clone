@@ -6,6 +6,40 @@ describe QuestionsController do
 	before(:each) do
 		@qs = two_questions
 	end
+	
+	describe 'GET #edit' do
+		context 'as admin' do
+			it "should route to the correct page" do
+				admin = double(:user, :admin => true, :id => 2)
+				controller.stub(:current_user).and_return admin
+				question = double(:question, :user_id => 1, :title => 'Title', :content => 'Content Now', :id => 1)
+				controller.stub(:question).and_return question
+				
+				get :edit, id: @qs.first.id
+				response.status.should eq 200
+			end
+		end
+
+		context 'as author' do
+			# it "should route to the correct page" do
+			# 	get :edit, id: @qs.first.id
+			# 	response.status.should eq 200
+			# end
+		end
+
+		context 'as non-author/non-admin' do
+			it "should not route to the edit page" do
+				question = double(:question, :user_id => 1, :title => 'Title', :content => 'Content Now', :id => 1)
+				current_user = double(:user, :admin => false)
+				
+				controller.stub(:question).and_return question
+				controller.stub(:current_user).and_return current_user
+				
+				get :edit, id: @qs.last.id
+				response.should_not render_template 'edit'
+			end
+		end
+	end
 
 	describe "GET #index" do
 		it "should route to questions_path" do
