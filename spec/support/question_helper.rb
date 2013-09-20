@@ -1,7 +1,7 @@
 module QuestionHelper
 	def two_questions
-	a = Question.create!(:user_id => 1, :title => 'Test1', :content => 'content 1')
-    b = Question.create!(:user_id => 1, :title => 'Test2', :content => 'content 2')
+	a = Question.create!(:user_id => 1, :title => 'Test1', :content => 'content 1',:up_votes => 0, :down_votes => 0)
+    b = Question.create!(:user_id => 1, :title => 'Test2', :content => 'content 2',:up_votes => 0, :down_votes => 0)
   	[a, b]
   end
 
