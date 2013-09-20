@@ -20,7 +20,6 @@ class QuestionsController < ApplicationController
 	def show
 		@answers = Answer.where(:question_id => [params[:id]])
 		@question = Question.find(params[:id])
-
 	end
 	
 	def create
@@ -50,22 +49,22 @@ class QuestionsController < ApplicationController
 			@question.destroy
 			redirect_to questions_path
 		else
-			@error = "You are not authorized to delete this question"
+			flash.now[:error] = "You are not authorized to delete this question"
 			redirect_to question_path(@question)
 		end
 	end
 
 	def upvote
-			question = Question.find(params[:format])
-			question.up_votes += 1
-			question.save
-			redirect_to question_path(question)
+		question = Question.find(params[:format])
+		question.up_votes += 1
+		question.save
+		redirect_to question_path(question)
 	end
 
-		def downvote
-			question = Question.find(params[:format])
-			question.down_votes -= 1
-			question.save
-			redirect_to question_path(question)
+	def downvote
+		question = Question.find(params[:format])
+		question.down_votes -= 1
+		question.save
+		redirect_to question_path(question)
 	end
 end
