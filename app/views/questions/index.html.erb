@@ -6,10 +6,8 @@
 <h1>All Questions</h1>
 
 <ul>
-<% @questions.each do |q| %>
-	<%= link_to q.title, q %><br>
-<% end %>
-	<li><%= link_to q.title, q %></li>
-<% end %>
+  <% @questions.each do |q| %>
+  	<li><%= link_to q.title, q %></li>
+  <% end %>
 </ul>
 
