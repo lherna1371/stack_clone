@@ -11,9 +11,8 @@ class CommentsController < ApplicationController
 	def create
 
 		if params[:comment][:content].blank?
-			# @error = "You submitted a blank comment try again"
 			flash[:error] = "You submitted a blank comment try again"
-			redirect_to new_answer_comment_path(params[:answer_id])
+			redirect_to :back
 			return
 		end
 
