@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-
+	helper QuestionsHelper
 	def index
 		# @questions = Question.all
 		@questions = Question.search(params[:search])
@@ -12,10 +12,15 @@ class QuestionsController < ApplicationController
 			redirect_to login_path
 		end
 	end
-	
+
+	def edit
+
+	end
+		
 	def show
 		@answers = Answer.where(:question_id => [params[:id]])
 		@question = Question.find(params[:id])
+
 	end
 	
 	def create

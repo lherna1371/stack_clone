@@ -19,8 +19,5 @@ class Question < ActiveRecord::Base
     end
   end
 
-	def votecount
-		self.up_votes + self.down_votes
-	end
 end
 
