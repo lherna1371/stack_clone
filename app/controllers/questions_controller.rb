@@ -14,9 +14,21 @@ class QuestionsController < ApplicationController
 	end
 
 	def edit
-
+		@question = Question.find(params[:id])
+		if @question.user == current_user || current_user.admin
+			render :edit
+		else
+			flash.now[:error] = "You do not have access to edit"
+			redirect_to @question
+		end
 	end
-		
+	
+	def update
+		@question = Question.find(params[:id])
+		@question.update_attributes(question_attributes)
+		redirect_to @question
+	end
+
 	def show
 		@answers = Answer.where(:question_id => [params[:id]])
 		@question = Question.find(params[:id])
@@ -67,4 +79,27 @@ class QuestionsController < ApplicationController
 		question.save
 		redirect_to question_path(question)
 	end
+
+
+	def favorite
+		@question = Question.find(params[:id])
+	    type = params[:type]
+	    if type == "favorite"
+	      current_user.favorites << @question
+	      redirect_to :back, notice: 'You favorited #{@question.name}'
+
+	    elsif type == "unfavorite"
+	      current_user.favorites.delete(@question)
+	      redirect_to :back, notice: 'Unfavorited #{@question.name}'
+
+	    else
+	      redirect_to :back, notice: 'Nothing happened.'
+	    end
+  	end
+
+  private
+
+  def question_attributes
+  	params.require(:question).permit(:title, :content)
+  end
 end

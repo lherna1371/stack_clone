@@ -3,7 +3,7 @@
 <%= link_to "up", upvote_path(@question.id)%> <%= link_to "down", downvote_path(@question.id)%>Votes: <%= votecount(@question) %>
 <h2>Question:</h2>
 <h3>Title: <%= @question.title %></h3>
-<%= link_to 'Edit', edit_question_path(@question) %>
+<%= link_to 'Edit', edit_question_path(@question) if @question.user == current_user || current_user.admin %>
 <br>
 
 Content: <%= @question.content %>
