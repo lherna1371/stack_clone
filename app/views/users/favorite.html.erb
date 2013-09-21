@@ -1,0 +1,7 @@
+<h1>My Favorites</h1>
+
+<ul>
+<% @user.favorites.each do |favorite|%>
+<li><%= link_to favorite.title, question_path(favorite.id)%></li>
+<% end %>
+</ul>

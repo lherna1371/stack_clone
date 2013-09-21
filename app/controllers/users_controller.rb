@@ -1,7 +1,12 @@
+require 'digest/md5'
 class UsersController < ApplicationController
 	def index
 		@users = User.all
 	end
+
+  def favorite
+    @user = User.find(current_user.id)
+  end 
 
 	def new
 		@user = User.new
@@ -10,7 +15,12 @@ class UsersController < ApplicationController
   def create
 	  @user = User.new(handle: params[:user][:handle], email: params[:user][:email],password: params[:user][:password],password_confirmation:params[:user][:password_confirmation] )
 
-	  if @user.save
+    email_address = @user.email.downcase
+    hash = Digest::MD5.hexdigest(email_address)
+    image_src = "http://www.gravatar.com/avatar/#{hash}? s=200"
+	  @user.photo = image_src
+    
+    if @user.save
 	    session[:user_id] = @user.id
 	    redirect_to users_path
 	  else
@@ -24,7 +34,11 @@ class UsersController < ApplicationController
 
   def edit
   	if current_user
-  		@user = User.find(current_user.id)
+  		if current_user.admin
+  			@user = User.find(params[:id])
+  		else
+  			@user = User.find(current_user.id)
+  		end
   	else
   		redirect_to login_path
   	end

@@ -6,6 +6,40 @@ describe QuestionsController do
 	before(:each) do
 		@qs = two_questions
 	end
+	
+	describe 'GET #edit' do
+		context 'as admin' do
+			it "should route to the correct page" do
+				admin = double(:user, :admin => true, :id => 2)
+				controller.stub(:current_user).and_return admin
+				question = double(:question, :user_id => 1, :title => 'Title', :content => 'Content Now', :id => 1)
+				controller.stub(:question).and_return question
+				
+				get :edit, id: @qs.first.id
+				response.status.should eq 200
+			end
+		end
+
+		context 'as author' do
+			# it "should route to the correct page" do
+			# 	get :edit, id: @qs.first.id
+			# 	response.status.should eq 200
+			# end
+		end
+
+		context 'as non-author/non-admin' do
+			it "should not route to the edit page" do
+				question = double(:question, :user_id => 1, :title => 'Title', :content => 'Content Now', :id => 1)
+				current_user = double(:user, :admin => false)
+				
+				controller.stub(:question).and_return question
+				controller.stub(:current_user).and_return current_user
+				
+				get :edit, id: @qs.last.id
+				response.should_not render_template 'edit'
+			end
+		end
+	end
 
 	describe "GET #index" do
 		it "should route to questions_path" do
@@ -39,7 +73,7 @@ describe QuestionsController do
 	describe "POST #create" do
 		context "with valid attribs" do
 			it "should create a new post" do
-				@attr = {:title => 'Test', :content => 'Test2', :user_id => 1 }
+				@attr = {:title => 'Test', :content => 'Test2', :user_id => 1, :up_votes => 0, :down_votes => 0 }
 				expect {
 					Question.create(@attr)
 				}.to change(Question, :count).by(1)
@@ -48,21 +82,21 @@ describe QuestionsController do
 
 		context "with invalid attribs" do
 			it "should not create a new post without title" do
-				@attr = {:title => '', :content => 'Test2', :user_id => 1 }
+				@attr = {:title => '', :content => 'Test2', :user_id => 1,:up_votes => 0, :down_votes => 0  }
 				expect {
 					Question.create(@attr)
 				}.not_to change(Question, :count)
 			end
 
 			it "should not create a new post without content" do
-				@attr = {:title => 'Test', :content => '', :user_id => 1 }
+				@attr = {:title => 'Test', :content => '', :user_id => 1,:up_votes => 0, :down_votes => 0  }
 				expect {
 					Question.create(@attr)
 				}.not_to change(Question, :count)
 			end
 
 			it "should not create a new post without user" do
-				@attr = {:title => 'Test', :content => 'Test2'}
+				@attr = {:title => 'Test', :content => 'Test2',:up_votes => 0, :down_votes => 0 }
 				expect {
 					Question.create(@attr)
 				}.not_to change(Question, :count)
@@ -77,7 +111,7 @@ describe QuestionsController do
 
 		context 'as question author' do
 			it "should delete a question" do
-				@attr = {:title => 'Test', :content => 'Test2', :user_id => 1 }
+				@attr = {:title => 'Test', :content => 'Test2', :user_id => 1,:up_votes => 0, :down_votes => 0  }
 				q = Question.create!(@attr)
 				expect {
 					delete :destroy, id: q.id
@@ -87,7 +121,7 @@ describe QuestionsController do
 
 		context 'as a non-author' do
 			it 'should not delete a question' do
-				@attr = {:title => 'Test', :content => 'Test2', :user_id => 2 }
+				@attr = {:title => 'Test', :content => 'Test2', :user_id => 2,:up_votes => 0, :down_votes => 0  }
 				q = Question.create(@attr)
 				expect {
 					delete :destroy, id: q.id
@@ -95,4 +129,25 @@ describe QuestionsController do
 			end
 		end
 	end
+
+	describe 'POST #favorite' do
+		context 'can be saved to favorites' do
+			it 'should save if type equalls favorite' do
+				user = User.create(handle: "handle",email: "test@test.com",password_digest: "password")
+				q = Question.create(:title => 'Test', :content => 'Test2', :user_id => 1,:up_votes => 0, :down_votes => 0)
+	    		type = "favorite"
+	    		expect user.favorites << q
+			end  
+		end 
+
+		context 'should delete from favorites' do
+			it 'should not delete from favorites if type equalls Unfavorited' do
+				user = User.create(handle: "handle",email: "test@test.com",password_digest: "password")
+				q = Question.create(:title => 'Test', :content => 'Test2', :user_id => 1,:up_votes => 0, :down_votes => 0)
+	    		type = "Unfavorited"
+	    		expect user.favorites.delete(q)
+			end  
+		end 
+	end 
 end
+

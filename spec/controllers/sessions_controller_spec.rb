@@ -13,7 +13,7 @@ describe SessionsController do
 		it "should redirect you to root and keep session nil if incorrect info" do
 			post :create,{session: {handle: 'Test1', password: 'ab123'}}
 			session[:user_id].should eq nil
-			response.should redirect_to(root_path)
+			response.should redirect_to(login_path)
 		end
 	end
 
