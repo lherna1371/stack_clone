@@ -137,4 +137,25 @@ feature 'Edit Question' do
 	end
 end
 
+feature 'Delete Question' do
+	context 'As Author' do
+		before(:each) do
+			two_questions
+			visit login_path
+			fill_in 'session_handle', with: 'handle'
+			fill_in 'session_password', with: 'password'
+			click_button 'Login'
+			click_link 'Handle'
+			click_link 'All user questions'
+			click_link 'Test1'
+		end
+		
+		it "should see that deletion is possible" do
+			page.should have_content 'Delete Question'
+		end
 
+		it "should be able to delete own question" do
+		end
+	end
+
+end
