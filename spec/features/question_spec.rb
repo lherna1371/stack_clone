@@ -49,14 +49,28 @@ feature 'View Question' do
 		it 'should be visible if user wrote question' do
 			sign_in
 			new_question
-			page.should have_button "Delete"
+			page.should have_button "Delete Question"
+		end
+
+		it 'should be visible if user is admin' do
+			sign_in_admin
+			click_link 'All user questions'
+			click_link 'TestQ'
+			save_and_open_page
+			page.should have_button "Delete Question"
 		end
 
 		it 'should be invisible if user is not author' do
 			qs = two_questions
 			sign_in
 			visit question_path(qs.last)
-			page.should_not have_button "Delete"
+			page.should_not have_button "Delete Question"
+		end
+
+		it 'should be invisible if user a viewer' do
+			qs = two_questions
+			visit question_path(qs.last)
+			page.should_not have_button "Delete Question"
 		end
 	end
 end
@@ -135,27 +149,4 @@ feature 'Edit Question' do
 			page.should_not have_content "Edit"
 		end
 	end
-end
-
-feature 'Delete Question' do
-	context 'As Author' do
-		before(:each) do
-			two_questions
-			visit login_path
-			fill_in 'session_handle', with: 'handle'
-			fill_in 'session_password', with: 'password'
-			click_button 'Login'
-			click_link 'Handle'
-			click_link 'All user questions'
-			click_link 'Test1'
-		end
-		
-		it "should see that deletion is possible" do
-			page.should have_content 'Delete Question'
-		end
-
-		it "should be able to delete own question" do
-		end
-	end
-
 end
