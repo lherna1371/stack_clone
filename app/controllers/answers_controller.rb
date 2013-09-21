@@ -29,7 +29,12 @@ class AnswersController < ApplicationController
 	end
 
 	def edit
-		@answer = Answer.find(params[:id])
+			@answer = Answer.find(params[:id])
+		if current_user && (current_user.admin || current_user.id == @answer.user_id)
+		else
+			flash[:error] = "You must log in first"
+			redirect_to login_path
+		end
 	end
 
 	def upvote

@@ -72,7 +72,5 @@ describe Question do
 		it "should strip spaces off search term" do
 			Question.search("   question    ").should eq([question])
 		end
-	end		
-
-
+	end
 end
