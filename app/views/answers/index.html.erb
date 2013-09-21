@@ -1,5 +1,8 @@
 All Answers
 
+<ul>
 <% @answers.each do |answer| %>
-	<%=answer.content %>
+	<li><%=link_to answer.question.title, answer.question %>: <%= answer.content %></li>
 <% end %>
+
+</ul>

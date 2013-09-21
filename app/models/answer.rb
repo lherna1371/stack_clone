@@ -1,8 +1,6 @@
 class Answer < ActiveRecord::Base
 	belongs_to :question
 	has_many :comments
-
-	def votecount
-			self.up_votes + self.down_votes
-	end
+	belongs_to :question
+	belongs_to :user
 end

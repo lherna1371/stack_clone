@@ -1,0 +1,6 @@
+<%= form_for answer do |f| %>
+	<%= f.label :content %><br>
+	<%= f.text_area :content, :size => "30x5" %>
+	<%= f.hidden_field :answer_id, :value => answer.id %><br>
+	<%= f.submit%>
+<% end %>
