@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
 	helper QuestionsHelper
 	def index
 		# @questions = Question.all
+		flash[:error]
 		@questions = Question.search(params[:search])
 	end
 
@@ -57,7 +58,7 @@ class QuestionsController < ApplicationController
 
 	def destroy
 		@question = Question.find(params[:id])
-		if @question.user_id == current_user.id
+		if current_user && (@question.user_id == current_user.id || current_user.admin)
 			@question.destroy
 			redirect_to questions_path
 		else
@@ -67,16 +68,18 @@ class QuestionsController < ApplicationController
 	end
 
 	def upvote
-		question = Question.find(params[:format])
-		question.up_votes += 1
-		question.save
+		if current_user
+			question = Question.find(params[:format])
+			question.upvote_questions.create(:user_id => current_user.id)
+		end
 		redirect_to question_path(question)
 	end
 
 	def downvote
-		question = Question.find(params[:format])
-		question.down_votes -= 1
-		question.save
+		if current_user
+			question = Question.find(params[:format])
+			question.downvote_questions.create(:user_id => current_user.id)
+		end
 		redirect_to question_path(question)
 	end
 
