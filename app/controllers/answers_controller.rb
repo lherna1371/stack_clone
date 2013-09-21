@@ -43,17 +43,19 @@ class AnswersController < ApplicationController
 	end
 
 	def upvote
-		answer = Answer.find(params[:format])
-		answer.up_votes += 1
-		answer.save
-		redirect_to question_path(answer.question_id)
+		if current_user
+			answer = Answer.find(params[:format])
+			answer.upvote_answers.create(:user_id => current_user.id)
+		end
+		redirect_to :back
 	end
 
 	def downvote
-		answer = Answer.find(params[:format])
-		answer.down_votes -= 1
-		answer.save
-		redirect_to question_path(answer.question_id)
+		if current_user
+			answer = Answer.find(params[:format])
+			answer.downvote_answers.create(:user_id => current_user.id)
+		end
+		redirect_to :back
 	end
 
 	private

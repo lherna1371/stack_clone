@@ -81,3 +81,54 @@ feature 'Editing Answer' do
 	end
 end
 
+feature 'Answer Voting' do
+	before(:each) do
+		basic_setup
+	end
+
+	describe 'Upvotes' do
+		context 'ability' do
+			it "should be allowed for signed in users" do
+				sign_in
+				click_link 'User 1 Title'
+				expect {page.find('#upvote_a').click}.to change(UpvoteAnswer, :count).by(1)
+			end
+
+			it "should not allow multiple upvotes" do
+				sign_in
+				click_link 'User 1 Title'
+				expect {page.find('#upvote_a').click}.to change(UpvoteAnswer, :count).by(1)
+				expect {page.find('#upvote_a').click}.not_to change(UpvoteAnswer, :count)
+			end
+
+			it "should not be allowed for unsigned in users" do
+				visit questions_path
+				click_link 'User 1 Title'
+				expect {page.find('#upvote_a').click}.not_to change(UpvoteAnswer, :count)
+			end
+		end
+	end
+
+	describe 'Downvotes' do
+		context 'ability' do
+			it "should be allowed for signed in users" do
+				sign_in
+				click_link 'User 1 Title'
+				expect {page.find('#downvote_a').click}.to change(DownvoteAnswer, :count).by(1)
+			end
+			
+			it "should not allow multiple downvotes" do
+				sign_in
+				click_link 'User 1 Title'
+				expect {page.find('#downvote_a').click}.to change(DownvoteAnswer, :count).by(1)
+				expect {page.find('#downvote_a').click}.not_to change(DownvoteAnswer, :count)
+			end
+
+			it "should not be allowed for unsigned in users" do
+				visit questions_path
+				click_link 'User 1 Title'
+				expect {page.find('#downvote_a').click}.not_to change(DownvoteAnswer, :count)
+			end
+		end
+	end
+end
