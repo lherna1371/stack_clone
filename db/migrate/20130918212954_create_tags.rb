@@ -8,18 +8,18 @@ class CreateTags < ActiveRecord::Migration
 end
 
 
-class QuestionTag < ActiveRecord::Base
-  belongs_to :question
-  belongs_to :tag
-end
+# class QuestionTag < ActiveRecord::Base
+#   belongs_to :question
+#   belongs_to :tag
+# end
 
 
-(question)CreateQuestion model: 
+# (question)CreateQuestion model:
 
-  has_many :tags, :through => :question_tag
-  has_many :question_tags
+#   has_many :tags, :through => :question_tag
+#   has_many :question_tags
 
-(tag)CreateTags model:
+# (tag)CreateTags model:
 
-  has_many :posts, :through => :question_tag
-  has_many :question_tags
+#   has_many :posts, :through => :question_tag
+#   has_many :question_tags
