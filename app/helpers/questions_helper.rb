@@ -1,7 +1,7 @@
 module QuestionsHelper
-	def votecount(question)
-		ups = question.up_votes || 0
-		downs = question.down_votes || 0
-		ups + downs
+	def q_votecount(question)
+		ups = question.upvote_questions.count || 0
+		downs = question.downvote_questions.count || 0
+		ups - downs
 	end
 end

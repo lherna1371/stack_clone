@@ -23,7 +23,7 @@ module UserHelper
 
   def sign_in_admin
     b = User.create!(handle: "handle2",email: "test2@test.com",password: "password", password_confirmation: "password")
-    b.questions.create(:title => 'TestQ', :content => "Current Content")
+    b.questions.create(:title => 'TestQ', :content => "Current Content", :up_votes => 0, :down_votes => 0)
     a = User.create!(handle: "handle",email: "test@test.com",password: "password", password_confirmation: "password")
     a.admin = true
     a.save

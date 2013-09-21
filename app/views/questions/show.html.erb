@@ -1,13 +1,13 @@
 
 
-<%= link_to "up", upvote_path(@question.id)%> <%= link_to "down", downvote_path(@question.id)%>Votes: <%= votecount(@question) %>
+<%= link_to "up", upvote_path(@question.id)%> <%= link_to "down", downvote_path(@question.id)%>Votes: <%= q_votecount(@question) %>
 <h2>Question:</h2>
 <h3>Title: <%= @question.title %></h3>
 <%= link_to 'Edit', edit_question_path(@question) if current_user && (@question.user == current_user || current_user.admin) %>
 <br>
 
 Content: <%= @question.content %>
-<%= link_to "up", upvote_path(@question.id)%> <%= link_to "down", downvote_path(@question.id)%>Votes: <%=votecount(@question) %>
+<%= link_to "up", upvote_path(@question.id), :id => "upvote_q" %> <%= link_to "down", downvote_path(@question.id), :id => "downvote_q" %>Votes: <%=q_votecount(@question) %>
 
 <p>Total answers: <%= @answers.count %></p>
 
@@ -24,7 +24,7 @@ Content: <%= @question.content %>
 
 <% @answers.each do |answer| %>
 <tr>
-  <td><%= answer.content %></td> <%= link_to "up", answerup_path(answer.id)%> <%= link_to "down", answerdown_path(answer.id)%>Votes: <%= votecount(answer) %><%= link_to 'Edit Answer', edit_answer_path(answer) if current_user && (answer.user == current_user || current_user.admin) %><br>
+  <td><%= answer.content %></td> <%= link_to "up", answerup_path(answer.id)%> <%= link_to "down", answerdown_path(answer.id)%>Votes: <%= a_votecount(answer) %><%= link_to 'Edit Answer', edit_answer_path(answer) if current_user && (answer.user == current_user || current_user.admin) %><br>
   <%= link_to "Comment On This Answer", new_answer_comment_path(answer.id) %>
   <td>Posted: <%= answer.created_at %></td><br><br>
 </tr>

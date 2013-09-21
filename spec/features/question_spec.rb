@@ -137,4 +137,53 @@ feature 'Edit Question' do
 	end
 end
 
+feature 'Voting' do
+	describe 'Upvotes' do
+		context 'ability' do
+			it "should be allowed for signed in users" do
+				sign_in
+				click_link 'TestQ'
+				expect {page.find('#upvote_q').click}.to change(UpvoteQuestion, :count).by(1)
+			end
 
+			it "should not allow multiple upvotes" do
+				sign_in
+				click_link 'TestQ'
+				expect {page.find('#upvote_q').click}.to change(UpvoteQuestion, :count).by(1)
+				expect {page.find('#upvote_q').click}.not_to change(UpvoteQuestion, :count)
+			end
+
+			it "should not be allowed for unsigned in users" do
+				two_questions
+				visit questions_path
+				click_link 'Test1'
+				expect {page.find('#upvote_q').click}.not_to change(UpvoteQuestion, :count)
+			end
+		end
+	end
+
+	describe 'Downvotes' do
+		context 'ability' do
+			it "should be allowed for signed in users" do
+				sign_in
+				click_link 'TestQ'
+				expect {page.find('#downvote_q').click}.to change(DownvoteQuestion, :count).by(1)
+			end
+			
+			it "should not allow multiple downvotes" do
+				sign_in
+				click_link 'TestQ'
+				expect {page.find('#downvote_q').click}.to change(DownvoteQuestion, :count).by(1)
+				expect {page.find('#downvote_q').click}.not_to change(DownvoteQuestion, :count)
+			end
+
+			it "should not be allowed for unsigned in users" do
+				two_questions
+				visit questions_path
+				click_link 'Test1'
+				expect {page.find('#downvote_q').click}.not_to change(DownvoteQuestion, :count)
+			end
+		end
+	end
+
+end
