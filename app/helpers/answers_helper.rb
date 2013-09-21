@@ -1,7 +1,7 @@
 module AnswersHelper
 	def a_votecount(answer)
-		ups = answer.up_votes || 0
-		downs = answer.down_votes || 0
+		ups = answer.upvote_answers.count
+		downs = answer.downvote_answers.count
 		ups - downs
 	end
 end

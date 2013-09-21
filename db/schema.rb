@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20130921204437) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "answers", force: true do |t|
     t.integer  "user_id"
     t.text     "content"
@@ -76,6 +73,13 @@ ActiveRecord::Schema.define(version: 20130921204437) do
 
   create_table "tags", force: true do |t|
     t.string   "tag_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "upvote", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "question_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
