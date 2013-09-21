@@ -17,9 +17,15 @@ class AnswersController < ApplicationController
 				redirect :back
 			end
 		else
-			flash.now[:error] = "You must be logged in to answer"
+			flash[:error] = "You must be logged in to answer"
 			redirect_to login_path
 		end
+	end
+
+	def update
+		@answer = Answer.find(params[:id])
+		@answer.update_attributes(answer_attributes)
+		redirect_to @answer.question
 	end
 
 	def edit
@@ -39,4 +45,9 @@ class AnswersController < ApplicationController
 		answer.save
 		redirect_to question_path(answer.question_id)
 	end
+
+	private
+	def answer_attributes
+  	params.require(:answer).permit(:content)
+  end
 end

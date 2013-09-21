@@ -35,10 +35,48 @@ feature 'Editing Answer' do
 
 		it "should be able to edit content" do
 			click_link 'Edit Answer'
-			save_and_open_page
-			fill_in answer_content, with: 'Edited'
+			fill_in 'answer_content', with: 'Edited'
 			click_button 'Update Answer'
 			page.should have_content 'Edited'
+		end
+	end
+
+	context 'As Answerer' do
+		it "should update a question" do
+			basic_setup
+			visit login_path
+			fill_in 'session_handle', with: 'handle2'
+			fill_in 'session_password', with: 'password'
+			click_button 'Login'
+			click_link 'Handle2'
+			click_link 'All user answers'
+			click_link 'User 1 Title'
+			page.should have_content 'Edit Answer'
+			click_link 'Edit Answer'
+			fill_in 'answer_content', with: 'Updated Answer'
+			click_button 'Update Answer'
+			page.should have_content 'Updated Answer'
+		end
+	end
+
+	context "As Restricted User" do
+		it "should not see Edit Link" do
+			basic_setup
+			visit login_path
+			fill_in 'session_handle', with: 'handle4'
+			fill_in 'session_password', with: 'password'
+			visit questions_path
+			click_link 'User 1 Title'
+			page.should_not have_content 'Edit Answer'
+		end
+	end
+
+	context "When Not Signed In" do
+		it "should not see Edit Link" do
+			basic_setup
+			visit questions_path
+			click_link 'User 1 Title'
+			page.should_not have_content 'Edit Answer'
 		end
 	end
 end
