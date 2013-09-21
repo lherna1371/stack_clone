@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
   def create
   	@user = User.find_by_handle(params[:session][:handle])
     if @user == nil
-      flash[:error] = "Handle or Password is incorrect"
+      flash[:error] = "The user you have entered does not exist, please use sign up link above"
       redirect_to login_path
     else
       if @user.is_active?
