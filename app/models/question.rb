@@ -6,6 +6,9 @@ class Question < ActiveRecord::Base
 
 	has_many :favorite_questions
   has_many :favorited_by, through: :favorite_questions, source: :user
+
+  has_many :tags, through: :question_tags
+  has_many :question_tags
 	
   validates_presence_of :title
 	validates_presence_of :content
