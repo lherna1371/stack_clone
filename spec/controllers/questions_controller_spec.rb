@@ -108,7 +108,7 @@ describe QuestionsController do
 
 	describe 'POST #destroy' do
 		before(:each) do
-			controller.stub(:current_user).and_return(double(:user, :id => 1))
+			controller.stub(:current_user).and_return(double(:user, :id => 1, :admin => false))
 		end
 
 		context 'as question author' do
@@ -128,6 +128,44 @@ describe QuestionsController do
 				expect {
 					delete :destroy, id: q.id
 				}.not_to change(Question, :count)
+			end
+
+			it 'should flash an error' do
+				@attr = {:title => 'Test', :content => 'Test2', :user_id => 2,:up_votes => 0, :down_votes => 0  }
+				q = Question.create(@attr)
+				delete :destroy, id: q.id
+				flash.now[:error].should =~ /not authorized/i
+			end
+		end
+
+		context 'as Admin' do
+			it "should delete a question" do
+				current_user = double(:user, :admin => true, :id => 2)
+				controller.stub(:current_user).and_return current_user
+				@attr = {:title => 'Test', :content => 'Test2', :user_id => 1,:up_votes => 0, :down_votes => 0  }
+				q = Question.create!(@attr)
+				expect {
+					delete :destroy, id: q.id
+				}.to change(Question, :count).by(-1)
+			end
+		end
+
+		context 'as Non-Logged-In Viewer' do
+			before(:each) do
+				controller.stub(:current_user).and_return false
+				@attr = {:title => 'Test', :content => 'Test2', :user_id => 1,:up_votes => 0, :down_votes => 0  }
+				@q = Question.create!(@attr)
+			end
+			
+			it "should not delete a question" do
+				expect {
+					delete :destroy, id: @q.id
+				}.not_to change(Question, :count)
+			end
+
+			it 'should flash an error' do
+				delete :destroy, id: @q.id
+				flash.now[:error].should =~ /not authorized/i
 			end
 		end
 	end

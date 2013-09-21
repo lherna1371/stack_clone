@@ -25,6 +25,8 @@ StackClone::Application.routes.draw do
   get '/login',  to: 'sessions#new'
   get '/logout', to: 'sessions#destroy'
 
+  resource :accounts, only: [:update]
+
   get '/upvote', to: 'questions#upvote'
   get '/downvote', to: 'questions#downvote'
   get '/answerup', to: 'answers#upvote'

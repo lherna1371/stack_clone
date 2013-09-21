@@ -58,7 +58,7 @@ feature 'User Profile' do
 			page.should have_content 'Edit Profile'
 		end
 
-		it "should change handle" do 
+		it "should change handle" do
 			click_link 'Edit Profile'
 			fill_in 'user_handle', with: 'handle2'
 			click_button 'Edit User'
@@ -95,5 +95,27 @@ feature 'Admin Capabilities' do
 		it "should be able to disable another user account" do
 			pending
 		end
+	end
+
+	context "Postings" do
+		it "should be able to edit other users' Questions" do
+			click_link 'All user questions'
+			page.should have_content "TestQ"
+			click_link 'TestQ'
+			click_link 'Edit'
+		end
+	end
+end
+
+feature 'Deactivate User' do
+	before(:each) do
+		sign_in
+		click_link 'Handle'
+	end
+
+	it "should see a deactivate account link" do
+		page.should have_content "deactivate account"
+		click_link "deactivate account"
+		current_path.should eq questions_path
 	end
 end

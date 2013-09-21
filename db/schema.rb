@@ -54,6 +54,13 @@ ActiveRecord::Schema.define(version: 20130921204437) do
     t.datetime "updated_at"
   end
 
+  create_table "question_tags", force: true do |t|
+    t.integer  "question_id"
+    t.integer  "tag_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "questions", force: true do |t|
     t.integer  "user_id"
     t.text     "content"
@@ -92,6 +99,7 @@ ActiveRecord::Schema.define(version: 20130921204437) do
     t.datetime "updated_at"
     t.boolean  "admin",           default: false
     t.string   "photo",           default: " "
+    t.boolean  "is_active",       default: true
   end
 
 end
