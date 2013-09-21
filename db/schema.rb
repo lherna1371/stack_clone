@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20130921184336) do
     t.datetime "updated_at"
     t.boolean  "admin",           default: false
     t.string   "photo",           default: " "
+    t.boolean  "is_active",       default: true
   end
 
 end
