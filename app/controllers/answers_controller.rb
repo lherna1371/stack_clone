@@ -24,8 +24,13 @@ class AnswersController < ApplicationController
 
 	def update
 		@answer = Answer.find(params[:id])
-		@answer.update_attributes(answer_attributes)
-		redirect_to @answer.question
+		if current_user && (current_user.admin || current_user.id == @answer.user_id)
+			@answer.update_attributes(answer_attributes)
+			redirect_to @answer.question
+		else
+			flash[:error] = 'You must log in first'
+			redirect_to @answer
+		end
 	end
 
 	def edit
