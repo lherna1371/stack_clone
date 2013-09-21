@@ -115,6 +115,8 @@ feature 'Deactivate User' do
 
 	it "should see a deactivate account link" do
 		page.should have_content "deactivate account"
+		click_link "deactivate account"
+		current_path.should eq questions_path
 	end
 end
 
