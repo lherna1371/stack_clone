@@ -11,4 +11,12 @@ class User < ActiveRecord::Base
   has_many :questions
   has_many :answers
   has_many :comments
+
+  def activate_account!
+   update_attribute :is_active, true
+ end
+
+ def deactivate_account!
+   update_attribute :is_active, false
+ end
 end

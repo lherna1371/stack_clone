@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
 	helper QuestionsHelper
 	def index
 		# @questions = Question.all
+		flash[:error]
 		@questions = Question.search(params[:search])
 	end
 

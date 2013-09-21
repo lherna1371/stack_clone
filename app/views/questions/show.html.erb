@@ -1,43 +1,44 @@
+<div class="hero-unit">
+
+		<%= link_to "up", upvote_path(@question.id)%> <%= link_to "down", downvote_path(@question.id)%>Votes: <%= votecount(@question) %>
+		<h2>Question:</h2>
+		<h3>Title: <%= @question.title %></h3>
+		<%= link_to 'Edit', edit_question_path(@question) %>
+		<br>
+
+		Content: <%= @question.content %>
+
+		<p>Total answers: <%= @answers.count %></p>
+
+		<%= link_to "Comment On This Question", new_question_comment_path(@question.id) %>
 
 
-<%= link_to "up", upvote_path(@question.id)%> <%= link_to "down", downvote_path(@question.id)%>Votes: <%= votecount(@question) %>
-<h2>Question:</h2>
-<h3>Title: <%= @question.title %></h3>
-<%= link_to 'Edit', edit_question_path(@question) %>
-<br>
+		<% if current_user && current_user == @question.user %>
+			<%= form_for @question, :method => :delete do |f| %>
+				<%= f.button 'Delete' %>
+			<% end %>
+		<% end %>
+	</div>
+	<div class="span12" >
+		<h2>Answers:</h2>
 
-Content: <%= @question.content %>
-<%= link_to "up", upvote_path(@question.id)%> <%= link_to "down", downvote_path(@question.id)%>Votes: <%=votecount(@question) %>
-
-<p>Total answers: <%= @answers.count %></p>
-
-<%= link_to "Comment On This Question", new_question_comment_path(@question.id) %>
-
-
-<% if current_user && current_user == @question.user %>
-	<%= form_for @question, :method => :delete do |f| %>
-		<%= f.button 'Delete' %>
-	<% end %>
-<% end %>
-
-<h2>Answers:</h2>
-
-<% @answers.each do |answer| %>
-<tr>
-  <td><%= answer.content %></td> <%= link_to "up", answerup_path(answer.id)%> <%= link_to "down", answerdown_path(answer.id)%>Votes: <%= answer.votecount %><br>
-  <%= link_to "Comment On This Answer", new_answer_comment_path(answer.id) %>
-  <td>Posted: <%= answer.created_at %></td><br><br>
-</tr>
-<% end %>
+		<% @answers.each do |answer| %>
+		<tr>
+		  <td><%= answer.content %></td> <%= link_to "up", answerup_path(answer.id)%> <%= link_to "down", answerdown_path(answer.id)%>Votes: <%= answer.votecount %><br>
+		  <%= link_to "Comment On This Answer", new_answer_comment_path(answer.id) %>
+		  <td>Posted: <%= answer.created_at %></td><br><br>
+		</tr>
+		<% end %>
 
 
 
 
-<h2>Answer Question:</h2>
+		<h2>Answer Question:</h2>
 
-<%= form_for :answer, url: answers_path do |f| %>
-	<%= f.label :content %><br>
-	<%= f.text_area :content, :size => "30x5" %>
-	<%= f.hidden_field :question_id, :value => @question.id %><br>
-	<%= f.submit%>
-<% end %>
+		<%= form_for :answer, url: answers_path do |f| %>
+			<%= f.label :content %><br>
+			<%= f.text_area :content, :size => "30x5" %>
+			<%= f.hidden_field :question_id, :value => @question.id %><br>
+			<%= f.submit%>
+		<% end %>
+	</div >

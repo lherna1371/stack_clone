@@ -6,3 +6,6 @@
 
 <p><%= link_to 'All user questions', user_questions_path(@user)%></p>
 <p><%= link_to 'All user answers', user_answers_path(@user)%></p>
+
+
+Unhappy? <p><%= link_to 'deactivate account', accounts_path(@user),method: 'PUT'%></p>
