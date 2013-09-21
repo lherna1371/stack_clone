@@ -106,3 +106,15 @@ feature 'Admin Capabilities' do
 		end
 	end
 end
+
+feature 'Deactivate User' do
+	before(:each) do
+		sign_in
+		click_link 'Handle'
+	end
+
+	it "should see a deactivate account link" do
+		page.should have_content "deactivate account"
+	end
+end
+

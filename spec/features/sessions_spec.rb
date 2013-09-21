@@ -26,4 +26,8 @@ describe "Sessions" do
 
 		current_path.should eq root_path
 	end
+
+	it "should not be able to login a user that is deactivated" do
+		pending
+	end
 end
