@@ -8,8 +8,11 @@
 </head>
 <body>
 	<header><%= render 'shared/header' %></header>
-
-		<%= yield %>
-
+	<div class="flash">
+		<% flash.each do |key, value| %>
+			<%= content_tag(:div, value, :class => "flash #{key}") %>
+		<% end %>
+	</div>
+	<%= yield %>
 </body>
 </html>

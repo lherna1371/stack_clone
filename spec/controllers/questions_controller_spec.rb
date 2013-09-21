@@ -1,7 +1,6 @@
 require 'spec_helper'
 include QuestionHelper
 
-
 describe QuestionsController do
 	before(:each) do
 		@qs = two_questions
@@ -21,16 +20,19 @@ describe QuestionsController do
 		end
 
 		context 'as author' do
-			# it "should route to the correct page" do
-			# 	get :edit, id: @qs.first.id
-			# 	response.status.should eq 200
-			# end
+			it "should route to the correct page" do
+				author = double(:user, :id => 1, :admin => false)
+				controller.stub(:current_user).and_return author
+				q = Question.create(:user_id => 1, :title => "Title", :content => 'OK')
+				get :edit, id: q.id
+				response.status.should eq 200
+			end
 		end
 
 		context 'as non-author/non-admin' do
 			it "should not route to the edit page" do
 				question = double(:question, :user_id => 1, :title => 'Title', :content => 'Content Now', :id => 1)
-				current_user = double(:user, :admin => false)
+				current_user = double(:user, :admin => false, :id => 2)
 				
 				controller.stub(:question).and_return question
 				controller.stub(:current_user).and_return current_user

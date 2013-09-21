@@ -15,7 +15,7 @@ class QuestionsController < ApplicationController
 
 	def edit
 		@question = Question.find(params[:id])
-		if @question.user == current_user || current_user.admin
+		if @question.user_id == current_user.id || current_user.admin
 			render :edit
 		else
 			flash.now[:error] = "You do not have access to edit"
@@ -61,7 +61,7 @@ class QuestionsController < ApplicationController
 			@question.destroy
 			redirect_to questions_path
 		else
-			@error = "You are not authorized to delete this question"
+			flash.now[:error] = "You are not authorized to delete this question"
 			redirect_to question_path(@question)
 		end
 	end

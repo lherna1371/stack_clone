@@ -100,7 +100,7 @@ feature 'Edit Question' do
 		end
 	end
 
-	context "as question owner" do
+	context "as Question Owner" do
 		before(:each) do
 			sign_in
 			click_link 'Handle'
