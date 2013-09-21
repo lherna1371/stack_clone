@@ -198,4 +198,20 @@ feature 'Voting' do
 			end
 		end
 	end
+
+	describe 'Cancelling Votes' do
+		it 'Clicking Upvote should cancel a Downvote if previously clicked' do
+			sign_in
+			click_link 'TestQ'
+			expect {page.find('#downvote_q').click}.to change(DownvoteQuestion, :count).by(1)
+			expect {page.find('#upvote_q').click}.to change(DownvoteQuestion, :count).by(-1)
+		end
+
+		it 'Clicking Downvote should cancel an Upvote if previously clicked' do
+			sign_in
+			click_link 'TestQ'
+			expect {page.find('#upvote_q').click}.to change(UpvoteQuestion, :count).by(1)
+			expect {page.find('#downvote_q').click}.to change(UpvoteQuestion, :count).by(-1)
+		end
+	end
 end
