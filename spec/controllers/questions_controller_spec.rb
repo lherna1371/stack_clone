@@ -130,6 +130,18 @@ describe QuestionsController do
 				}.not_to change(Question, :count)
 			end
 		end
+
+		context 'as Admin' do
+			it "should delete a question" do
+				current_user = double(:user, :admin => true)
+				controller.stub(:current_user).and_return current_user
+				@attr = {:title => 'Test', :content => 'Test2', :user_id => 1,:up_votes => 0, :down_votes => 0  }
+				q = Question.create!(@attr)
+				expect {
+					delete :destroy, id: q.id
+				}.to change(Question, :count).by(-1)
+			end
+		end
 	end
 
 	describe 'POST #favorite' do
