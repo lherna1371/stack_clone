@@ -40,8 +40,5 @@ feature 'Create Comment form' do
 				}.to change(Comment, :count).by(1)
 	    end
 	end
-
-
-
 end
 
