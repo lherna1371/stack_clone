@@ -1,7 +1,9 @@
-
-
 <%= link_to "up", upvote_path(@question.id)%> <%= link_to "down", downvote_path(@question.id)%>Votes: <%= votecount(@question) %>
 <h2>Question:</h2>
+<% if current_user && (current_user == @question.user || current_user.admin) %>
+	<%= button_to 'Delete Question', question_path(@question), method: :delete %>
+<% end %>
+
 <h3>Title: <%= @question.title %></h3>
 <%= link_to 'Edit', edit_question_path(@question) if current_user && (@question.user == current_user || current_user.admin) %>
 <br>
@@ -9,16 +11,10 @@
 Content: <%= @question.content %>
 <%= link_to "up", upvote_path(@question.id)%> <%= link_to "down", downvote_path(@question.id)%>Votes: <%=votecount(@question) %>
 
+
 <p>Total answers: <%= @answers.count %></p>
 
 <%= link_to "Comment On This Question", new_question_comment_path(@question.id) %>
-
-
-<% if current_user && current_user == @question.user %>
-	<%= form_for @question, :method => :delete do |f| %>
-		<%= f.button 'Delete' %>
-	<% end %>
-<% end %>
 
 <h2>Answers:</h2>
 
