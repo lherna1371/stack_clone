@@ -15,13 +15,24 @@ class QuestionsController < ApplicationController
 	end
 
 	def edit
-
+		@question = Question.find(params[:id])
+		if @question.user_id == current_user.id || current_user.admin
+			render :edit
+		else
+			flash.now[:error] = "You do not have access to edit"
+			redirect_to @question
+		end
 	end
-		
+	
+	def update
+		@question = Question.find(params[:id])
+		@question.update_attributes(question_attributes)
+		redirect_to @question
+	end
+
 	def show
 		@answers = Answer.where(:question_id => [params[:id]])
 		@question = Question.find(params[:id])
-
 	end
 	
 	def create
@@ -47,26 +58,49 @@ class QuestionsController < ApplicationController
 
 	def destroy
 		@question = Question.find(params[:id])
-		if @question.user_id == current_user.id
+		if current_user && (@question.user_id == current_user.id || current_user.admin)
 			@question.destroy
 			redirect_to questions_path
 		else
-			@error = "You are not authorized to delete this question"
+			flash.now[:error] = "You are not authorized to delete this question"
 			redirect_to question_path(@question)
 		end
 	end
 
 	def upvote
-			question = Question.find(params[:format])
-			question.up_votes += 1
-			question.save
-			redirect_to question_path(question)
+		question = Question.find(params[:format])
+		question.up_votes += 1
+		question.save
+		redirect_to question_path(question)
 	end
 
-		def downvote
-			question = Question.find(params[:format])
-			question.down_votes -= 1
-			question.save
-			redirect_to question_path(question)
+	def downvote
+		question = Question.find(params[:format])
+		question.down_votes -= 1
+		question.save
+		redirect_to question_path(question)
 	end
+
+
+	def favorite
+		@question = Question.find(params[:id])
+	    type = params[:type]
+	    if type == "favorite"
+	      current_user.favorites << @question
+	      redirect_to :back, notice: 'You favorited #{@question.name}'
+
+	    elsif type == "unfavorite"
+	      current_user.favorites.delete(@question)
+	      redirect_to :back, notice: 'Unfavorited #{@question.name}'
+
+	    else
+	      redirect_to :back, notice: 'Nothing happened.'
+	    end
+  	end
+
+  private
+
+  def question_attributes
+  	params.require(:question).permit(:title, :content)
+  end
 end

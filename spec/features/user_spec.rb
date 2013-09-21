@@ -58,7 +58,7 @@ feature 'User Profile' do
 			page.should have_content 'Edit Profile'
 		end
 
-		it "should change handle" do 
+		it "should change handle" do
 			click_link 'Edit Profile'
 			fill_in 'user_handle', with: 'handle2'
 			click_button 'Edit User'
@@ -119,4 +119,3 @@ feature 'Deactivate User' do
 		current_path.should eq questions_path
 	end
 end
-

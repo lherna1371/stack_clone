@@ -5,6 +5,7 @@ StackClone::Application.routes.draw do
    resources :users do
     resources :questions, only: [:index]
     resources :answers, only: [:index]
+    get :favorite, on: :member
   end
 
   resources :answers do
@@ -13,6 +14,7 @@ StackClone::Application.routes.draw do
 
   resources :questions do
     resources :comments, only:[:create, :new]
+    put :favorite, on: :member
   end
 
   resources :users

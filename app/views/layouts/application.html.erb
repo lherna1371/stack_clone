@@ -10,9 +10,17 @@
 <body>
 	<div class="container">
 		<div class='nav'><%= render 'shared/header' %></div>
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+    <div class="flash">
+      <% flash.each do |key, value| %>
+        <%= content_tag(:div, value, :class => "flash #{key}") %>
+      <% end %>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	  <script src="js/bootstrap.min.js"></script>
-		<%= yield %>
+
+    <%= yield %>
 	</div>
 </body>
 </html>

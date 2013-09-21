@@ -7,7 +7,10 @@
 
 <ul>
 <% @questions.each do |q| %>
-	<li><%= link_to q.title, q %></li>
+	<li><%= link_to q.title, q %></li><br><%= link_to "favorite",   favorite_question_path(q.id, type: "favorite"), method: :put %><br><%= link_to "unfavorite", favorite_question_path(q.id, type: "unfavorite"), method: :put %>
 <% end %>
 </ul>
+
+
+
 

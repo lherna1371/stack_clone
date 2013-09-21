@@ -1,7 +1,13 @@
 class Question < ActiveRecord::Base
 	belongs_to :user
-	has_many :comments
-	validates_presence_of :title
+	has_many :comments, dependent: :destroy
+
+  has_many :answers, dependent: :destroy
+
+	has_many :favorite_questions, dependent: :destroy
+  has_many :favorited_by, through: :favorite_questions, source: :user, dependent: :destroy
+	
+  validates_presence_of :title
 	validates_presence_of :content
 	validates_presence_of :user_id
 
@@ -13,5 +19,6 @@ class Question < ActiveRecord::Base
     end
   end
 
+  
 end
 
