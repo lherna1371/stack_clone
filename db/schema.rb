@@ -101,5 +101,4 @@ ActiveRecord::Schema.define(version: 20130922022653) do
     t.string   "photo",           default: " "
     t.boolean  "is_active",       default: true
   end
-
 end
