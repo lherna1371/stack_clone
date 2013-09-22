@@ -27,15 +27,15 @@ SETUP AND CONFIGURATION
 	-localhost is 3000
 
 * Database creation
-	- Upon cloning the repo, run 'bundle install' to prepare the gems for use
+	- Upon cloning the repo, run <tt>bundle install</tt> to prepare the gems for use
 
 * Database initialization
 	-Then, run 'rake db:create' to create the database
-	-Finally, run 'rake db:migrate' to build all necessary tables
+	-Finally, run <tt>rake db:migrate</tt> to build all necessary tables
 
 * How to run the test suite
-	- StackUnderflow runs tests through Rspec. Running 'rake spec' will cycle through all tests.
+	- StackUnderflow runs tests through Rspec. Running <tt>rake spec</tt> will cycle through all tests.
 
 * Services (job queues, cache servers, search engines, etc.)
 
-<tt>rake doc:app</tt>.
+
