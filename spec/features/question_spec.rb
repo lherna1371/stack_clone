@@ -56,7 +56,6 @@ feature 'View Question' do
 			sign_in_admin
 			click_link 'All user questions'
 			click_link 'TestQ'
-			save_and_open_page
 			page.should have_button "Delete Question"
 		end
 

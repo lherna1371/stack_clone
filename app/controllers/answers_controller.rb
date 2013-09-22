@@ -45,7 +45,11 @@ class AnswersController < ApplicationController
 	def upvote
 		if current_user
 			answer = Answer.find(params[:format])
-			answer.upvote_answers.create(:user_id => current_user.id)
+			if answer.downvote_answers.where(:user_id => current_user.id).empty?
+				UpvoteAnswer.create(:user_id => current_user.id, :answer_id => answer.id)
+			else
+				answer.downvote_answers.where(:user_id => current_user.id).first.destroy
+			end
 		end
 		redirect_to :back
 	end
@@ -53,7 +57,11 @@ class AnswersController < ApplicationController
 	def downvote
 		if current_user
 			answer = Answer.find(params[:format])
-			answer.downvote_answers.create(:user_id => current_user.id)
+			if answer.upvote_answers.where(:user_id => current_user.id).empty?
+				DownvoteAnswer.create(:user_id => current_user.id, :answer_id => answer.id)
+			else
+				answer.upvote_answers.where(:user_id => current_user.id)[0].destroy
+			end
 		end
 		redirect_to :back
 	end
