@@ -71,8 +71,10 @@ class QuestionsController < ApplicationController
 	def upvote
 		if current_user
 			question = Question.find(params[:format])
-			if question.downvote_questions.where(:user_id => current_user.id).empty?
-				UpvoteQuestion.create(:user_id => current_user.id, :question_id => question.id)
+			if question.downvote_questions.where(:user_id => current_user.id).empty? 
+				if question.upvote_questions.where(:user_id => current_user.id).empty?
+					UpvoteQuestion.create(:user_id => current_user.id, :question_id => question.id)
+				end
 			else
 				question.downvote_questions.where(:user_id => current_user.id).first.destroy
 			end
@@ -84,7 +86,9 @@ class QuestionsController < ApplicationController
 		if current_user
 			question = Question.find(params[:format])
 			if question.upvote_questions.where(:user_id => current_user.id).empty?
-				DownvoteQuestion.create(:user_id => current_user.id, :question_id => question.id)
+				if question.downvote_questions.where(:user_id => current_user.id).empty?
+					DownvoteQuestion.create(:user_id => current_user.id, :question_id => question.id)
+				end
 			else
 				question.upvote_questions.where(:user_id => current_user.id).first.destroy
 			end
