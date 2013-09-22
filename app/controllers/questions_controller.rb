@@ -31,17 +31,17 @@ class QuestionsController < ApplicationController
 
 	def show
 		@array = [ ]
-		puts "**************************************************"
-		puts params[:id]
+		# puts "**************************************************"
+		# puts params[:id]
 		@answers = Answer.where(:question_id => [params[:id]])
 		@question = Question.find(params[:id])
 		@question_comments = @question.comments
 		@qt = QuestionTag.where(:question_id => [params[:id]])
-		puts @qt
+		# puts @qt
 		@qt.each do |t|
 			@array << t.tag_id
 		end 
-		puts @array.inspect
+		# puts @array.inspect
 		# puts @qt.first.inspect
 		# @n = @qt.first.tag_id
 		# @tag = Tag.where(:id => @n)
