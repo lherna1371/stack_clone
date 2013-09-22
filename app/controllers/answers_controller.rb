@@ -14,7 +14,8 @@ class AnswersController < ApplicationController
 			if @answer.save
 				redirect_to @answer.question
 			else
-				redirect :back
+				flash[:error] = "Answer was not Saved"
+				redirect_to question_path(@answer.question)
 			end
 		else
 			flash[:error] = "You must be logged in to answer"
