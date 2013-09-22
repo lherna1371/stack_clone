@@ -22,8 +22,8 @@ class AuthenticationsController < ApplicationController
 	  	redirect_to authentications_path
 	  else
 	  	@user = User.new(handle: nickname, email: "#{nickname}@twitter.com" ,password: uid ,password_confirmation: uid )
-	    user.authentications.create!(:provider => provider, :uid => uid)
-	    if user.save
+	    @user.authentications.build(:provider => provider, :uid => uid)
+	    if @user.save
 	    	session[:user_id] = @user.id
 	      flash[:notice] = "Signed in successfully."
 	      redirect_to questions_path, :notice => "Signed in succesfully!"
