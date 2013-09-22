@@ -1,0 +1,9 @@
+<h1>All Authentications</h1>
+
+<% if @authentications %>
+	<ul>
+		<% @authentications.each do |auth| %>
+			<li><%= auth.provider %></li>
+		<% end %>
+	</ul>
+<% end %>

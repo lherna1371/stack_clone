@@ -32,6 +32,9 @@ StackClone::Application.routes.draw do
   get '/answerup', to: 'answers#upvote'
   get '/answerdown', to: 'answers#downvote'
 
+  get '/auth/:provider/callback', to: 'authentications#create' 
+  resources :authentications, only: [:index, :destroy]
+
 
   # The priority is based upon order of creation: first c1reated -> highest priority.
   # See how all your routes lay out with "rake routes".
