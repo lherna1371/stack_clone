@@ -1,7 +1,13 @@
 
 <div class="hero-unit">
 	<%= link_to "up", upvote_path(@question.id),:class => 'upvote', :id => "upvote_q" %>
-	<%= link_to "down", downvote_path(@question.id), :class => 'downvote', :id => "downvote_q" %>Votes: <%=q_votecount(@question) %>
+	<%= link_to "down", downvote_path(@question.id), :class => 'downvote', :id => "downvote_q" %>Votes: <%=q_votecount(@question) %><br>
+
+	Question Tags: 
+	<% @array.each do |q|%>
+		<% tag = Tag.where(:id => q)%>
+		<%= tag.first.tag_name %>, 
+	<% end %>
 
 	<h2>Question:</h2>
 	<% if current_user && (current_user == @question.user || current_user.admin) %>
@@ -11,7 +17,9 @@
 	<h3>Title: <%= @question.title %></h3>
 	<%= link_to 'Edit', edit_question_path(@question) if current_user && (@question.user == current_user || current_user.admin) %>
 	<br>
-	Content: <%= @question.content %>
+	
+	Content:
+	<p class="content"><%= simple_format(@question.content) %></p>
 
 	<p>Total answers: <%= @answers.count %></p>
 	<% if @question_comments %>

@@ -35,6 +35,10 @@
 	border:2px solid gray;
 }
 
+p .content {
+	text-align: left;
+}
+
 ul {
 	list-style-type: none;
 }
