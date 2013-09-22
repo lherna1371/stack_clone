@@ -9,6 +9,10 @@ describe Authentication do
 		expect(Authentication.last.provider).to eq 'twitter'
 	end
 
+	it "has an asisiacion whith user" do  
+		auth = user.authentications.create(provider: 'twitter', uid: 2)
+		expect(Authentication.last.provider).to eq 'twitter'
+	end
 
 end
 
