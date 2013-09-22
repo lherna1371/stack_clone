@@ -3,7 +3,9 @@
 <% if @authentications %>
 	<ul>
 		<% @authentications.each do |auth| %>
-			<li><%= auth.provider %>, <%= auth.uid %></li>
+			<li><%= auth.provider %>, <%= auth.uid %>
+			<%= link_to "DELETE",authentication_path(auth), :confirm => 'Are you sure you want to remove this authentication option?', :method => :delete %>
+			</li>
 		<% end %>
 	</ul>
 
