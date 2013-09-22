@@ -40,22 +40,11 @@
 
 		<h2>Answers:</h2>
 
-		<% @answers.each do |answer| %>
-			<tr>
-			  <td><%= answer.content %></td>
-			  <%= link_to "up", answerup_path(answer.id), :class => 'upvote', :id => 'upvote_a' %>
-			  <%= link_to "down", answerdown_path(answer.id), :class => 'downvote', :id => 'downvote_a' %>Votes: <%= a_votecount(answer) %>
-			  <%= link_to 'Edit Answer', edit_answer_path(answer) if current_user && (answer.user == current_user || current_user.admin) %><br>
-			  <%= link_to "Comment On This Answer", new_answer_comment_path(answer.id) %>
-			  <td>Posted: <%= answer.created_at %></td><br><br>
-			</tr>
-		<% end %>
-
 		<ul>
 			<% @answers.each do |answer| %>
 				<li>
-				  <%= link_to "up", answerup_path(answer.id), :id => 'upvote_a' %>
-				  <%= link_to "down", answerdown_path(answer.id), :id => 'downvote_a' %>
+					<%= link_to "up", answerup_path(answer.id), :class => 'upvote', :id => 'upvote_a' %>
+			  	<%= link_to "down", answerdown_path(answer.id), :class => 'downvote', :id => 'downvote_a' %>
 				  Votes: <%= a_votecount(answer) %>
 				  <%= answer.content %>
 				  <%= link_to 'Edit Answer', edit_answer_path(answer) if current_user && (answer.user == current_user || current_user.admin) %><br>
