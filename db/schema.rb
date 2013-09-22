@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130921204437) do
+ActiveRecord::Schema.define(version: 20130922022653) do
 
   create_table "answers", force: true do |t|
     t.integer  "user_id"
@@ -77,13 +77,6 @@ ActiveRecord::Schema.define(version: 20130921204437) do
     t.datetime "updated_at"
   end
 
-  create_table "upvote", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "question_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "upvote_answers", force: true do |t|
     t.integer  "user_id"
     t.integer  "answer_id"
@@ -92,8 +85,8 @@ ActiveRecord::Schema.define(version: 20130921204437) do
   end
 
   create_table "upvote_questions", force: true do |t|
-    t.integer  "user_id"
     t.integer  "question_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
