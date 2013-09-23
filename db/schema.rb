@@ -14,7 +14,6 @@
 ActiveRecord::Schema.define(version: 20130922022653) do
 
 
-
   create_table "answers", force: true do |t|
     t.integer  "user_id"
     t.text     "content"
@@ -22,6 +21,14 @@ ActiveRecord::Schema.define(version: 20130922022653) do
     t.integer  "down_votes"
     t.integer  "question_id"
     t.boolean  "solved"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "authentications", force: true do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
