@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20130922022653) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "answers", force: true do |t|
     t.integer  "user_id"
     t.text     "content"
@@ -20,6 +23,14 @@ ActiveRecord::Schema.define(version: 20130922022653) do
     t.integer  "down_votes"
     t.integer  "question_id"
     t.boolean  "solved"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "authentications", force: true do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -101,4 +112,5 @@ ActiveRecord::Schema.define(version: 20130922022653) do
     t.string   "photo",           default: " "
     t.boolean  "is_active",       default: true
   end
+
 end

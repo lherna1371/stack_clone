@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 
   has_many :favorite_questions, dependent: :destroy
   has_many :favorites, through: :favorite_questions, source: :question, dependent: :destroy
+  has_many :authentications, dependent: :destroy
 
   def activate_account!
     update_attribute :is_active, true
