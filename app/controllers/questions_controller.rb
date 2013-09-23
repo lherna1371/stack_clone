@@ -1,7 +1,6 @@
 class QuestionsController < ApplicationController
 	helper QuestionsHelper
 	def index
-		# @questions = Question.all
 		flash[:error]
 		@questions = Question.search(params[:search])
 	end
@@ -31,13 +30,29 @@ class QuestionsController < ApplicationController
 	end
 
 	def show
+		@array = [ ]
+		# puts "**************************************************"
+		# puts params[:id]
 		@answers = Answer.where(:question_id => [params[:id]])
 		@question = Question.find(params[:id])
+		@question_comments = @question.comments
+		@qt = QuestionTag.where(:question_id => [params[:id]])
+		# puts @qt
+		@qt.each do |t|
+			@array << t.tag_id
+		end 
+		# puts @array.inspect
+		# puts @qt.first.inspect
+		# @n = @qt.first.tag_id
+		# @tag = Tag.where(:id => @n)
 	end
 	
 	def create
 		if current_user
 			@question = Question.new(:title => params[:question][:title], :content => params[:question][:content], :user_id => params[:question][:user_id].to_i,up_votes: 0,down_votes: 0)
+			# @tag = Tag.new(:tag_name => params[:question][:tag][:tag_name])
+			@tag = params[:question][:tag][:tag_name]
+			tsplit = @tag.split
 			if @question.title == ''
 				@error = "Error: Question Must Have Title"
 				render new_question_path
@@ -45,6 +60,11 @@ class QuestionsController < ApplicationController
 				@error = "Error: Question Must Have Content"
 			else
 				if @question.save
+					tsplit.each do |tag|
+						@newtag = Tag.new(:tag_name => tag)
+						@newtag.save
+						QuestionTag.create(:tag_id => @newtag.id, :question_id => @question.id)
+					end 
 					redirect_to @question
 				else
 					@error = "Error: Question was not saved"
@@ -70,7 +90,13 @@ class QuestionsController < ApplicationController
 	def upvote
 		if current_user
 			question = Question.find(params[:format])
-			question.upvote_questions.create(:user_id => current_user.id)
+			if question.downvote_questions.where(:user_id => current_user.id).empty? 
+				if question.upvote_questions.where(:user_id => current_user.id).empty?
+					UpvoteQuestion.create(:user_id => current_user.id, :question_id => question.id)
+				end
+			else
+				question.downvote_questions.where(:user_id => current_user.id).first.destroy
+			end
 		end
 		redirect_to question_path(question)
 	end
@@ -78,7 +104,13 @@ class QuestionsController < ApplicationController
 	def downvote
 		if current_user
 			question = Question.find(params[:format])
-			question.downvote_questions.create(:user_id => current_user.id)
+			if question.upvote_questions.where(:user_id => current_user.id).empty?
+				if question.downvote_questions.where(:user_id => current_user.id).empty?
+					DownvoteQuestion.create(:user_id => current_user.id, :question_id => question.id)
+				end
+			else
+				question.upvote_questions.where(:user_id => current_user.id).first.destroy
+			end
 		end
 		redirect_to question_path(question)
 	end
@@ -89,11 +121,10 @@ class QuestionsController < ApplicationController
 	    type = params[:type]
 	    if type == "favorite"
 	      current_user.favorites << @question
-	      redirect_to :back, notice: 'You favorited #{@question.name}'
-
+	      redirect_to :back, notice: "You favorited '#{@question.title}'"
 	    elsif type == "unfavorite"
 	      current_user.favorites.delete(@question)
-	      redirect_to :back, notice: 'Unfavorited #{@question.name}'
+	      redirect_to :back, notice: "Unfavorited '#{@question.title}'"
 
 	    else
 	      redirect_to :back, notice: 'Nothing happened.'

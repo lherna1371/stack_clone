@@ -131,4 +131,22 @@ feature 'Answer Voting' do
 			end
 		end
 	end
+
+	describe 'Cancelling Out Votes' do
+		it "should delete an upvote after selecting a downvote" do
+			sign_in
+			click_link 'User 1 Title'
+			expect {page.find('#upvote_a').click}.to change(UpvoteAnswer, :count).by(1)
+			expect {page.find('#downvote_a').click}.to change(UpvoteAnswer, :count).by(-1)
+		end
+	end
+
+	describe 'Cancelling Out Votes' do
+		it "should delete a downvote after selecting an upvote" do
+			sign_in
+			click_link 'User 1 Title'
+			expect {page.find('#downvote_a').click}.to change(DownvoteAnswer, :count).by(1)
+			expect {page.find('#upvote_a').click}.to change(DownvoteAnswer, :count).by(-1)
+		end
+	end
 end

@@ -5,6 +5,13 @@
 	
 	<%= f.label :content %>
 	<%= f.text_area :content, :size => "30x5" %><br>
+
 	<%= f.hidden_field :user_id, :value => current_user.id %>
+
+	<%= f.fields_for :tag do |p| %>
+		<%= f.label :tags %>
+    	<%= p.text_field :tag_name, :required => true, :placeholder => "one two three..." %><br>
+  	<% end %>
+
 	<%= f.submit %>
 <% end %>
