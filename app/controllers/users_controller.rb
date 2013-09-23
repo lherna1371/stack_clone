@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     
     if @user.save
 	    session[:user_id] = @user.id
-	    redirect_to users_path
+	    redirect_to questions_path
 	  else
 	    redirect_to new_user_path
 	  end
