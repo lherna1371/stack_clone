@@ -16,7 +16,7 @@ class Question < ActiveRecord::Base
 
   def self.search(search)
     if search
-      where('title LIKE :word OR content LIKE :word', word: "%#{search.strip}%").to_a
+      where('title LIKE ? OR content LIKE ?', "%#{search.strip}%", "%#{search.strip}%").to_a
     else
       all
     end
